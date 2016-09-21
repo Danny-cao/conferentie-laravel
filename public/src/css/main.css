@@ -92,7 +92,8 @@ nav ul {
 
 nav li {
     display: inline-block;
-    padding: 3px 16px;
+    padding: 2px 16px;
+    float:right;
 }
 
 header nav li:first-of-type {
@@ -100,7 +101,7 @@ header nav li:first-of-type {
 }
 
 header nav li:last-of-type {
-    padding-right: 0;
+    padding-right: 20px;
 }
 
 nav a {
@@ -142,4 +143,36 @@ header nav a:hover {
     text-align: center;
     height: 25px;
     background-color: white;
+}
+
+
+
+.input-group  {
+    margin:16px 0;
+}
+
+.input-group label {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    margin-bottom:5px;
+}
+
+.input-group input,
+.input-group textarea {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family:inherit;
+    font-size: inherit;
+    padding: 4px 8px;
+    
+}
+
+.input-group #author,
+.input-group #email{
+    width: 200px;
+}
+
+.input-group textarea{
+    width: 400px;
 }

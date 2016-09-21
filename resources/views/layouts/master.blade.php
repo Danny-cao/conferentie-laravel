@@ -8,7 +8,7 @@
         
      </head>
      
-         @include('includes.header')
+        @include('includes.header')
         
         @include('includes.left-bar')
     <body>
