@@ -12,10 +12,9 @@
 */
 
 
-Route::get('/', function() {
-    return view('index'); 
-})->name('index');
-
+    Route::get('/', function() {
+      return view('index'); 
+    })->name('index');
 
 
 Route::group(['prefix' => 'agenda'], function() {
@@ -39,6 +38,14 @@ Route::group(['prefix' => 'reservering'], function() {
 
 });    
 
+    Route::post('/new', [
+        'uses' => 'ReserveringController@postReservering',
+        'as' => 'sendmailReservering'
+    ]);
+
+
+
+
 
 Route::group(['prefix' => 'aanmelding'], function() {
 
@@ -59,7 +66,13 @@ Route::group(['prefix' => 'organisator'], function(){
     })->name('login');
 });
 
+    Route::get('/contact', [
+        'uses' => 'ContactMessageController@getContactIndex',
+        'as' => 'contact'
+        ]);
+        
+    Route::post('/contact/sendmail', [
+        'uses' => 'ContactMessageController@postSendMessage',
+        'as' => 'contact.send'
+        ]);    
 
-    Route::get('/contact', function() {
-        return view('layouts.contact'); 
-    })->name('index');

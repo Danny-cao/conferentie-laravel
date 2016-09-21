@@ -13,9 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\QuoteCreated' => [
-            'App\Listeners\CreateLogEntry',
-            'App\Listeners\SendUserNotification'
+        'App\Events\contact' => [
+            'App\Listeners\SendUserContact'
         ],
     ];
 
