@@ -48,14 +48,25 @@ Route::group(['prefix' => 'reservering'], function() {
 
 
 Route::group(['prefix' => 'aanmelding'], function() {
-
-    Route::get('/', function() {
-        return view('layouts.aanmelden.aanmelding');
-    })->name('aanmelding');
+    
+    Route::get('/', [
+        'uses' => 'AanmeldingController@getAanmeldingIndex',
+        'as' => 'Aanmelding'
+        ]);
+        
+    Route::post('/postaanmelding', [
+        'uses' => 'AanmeldingController@postAanmelding',
+        'as' => 'postaanmelding'
+        ]);    
     
     Route::get('/vervolg', function() {
         return view('layouts.aanmelden.vervolg');
     })->name('vervolg');
+    
+        Route::post('/contact/sendmail', [
+        'uses' => 'ContactMessageController@postSendMessage',
+        'as' => 'contact.send'
+        ]);    
 
 }); 
 

@@ -25,7 +25,7 @@
             
               <div class ="input-group">
                 <label for="email">
-                    Je E-mail
+                    Je Email
                 </label>
                 <input type="text" name="email" id="email" placeholder="Je email" value="{{ Request::old('email')}}"/>
             </div>

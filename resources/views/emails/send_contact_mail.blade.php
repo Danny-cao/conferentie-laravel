@@ -1,1 +1,2 @@
-<h1> Thanks for contact </h1>
+<h1> We hebben uw contact berichtje ontvangen </h1>
+
