@@ -7,41 +7,22 @@
 
         <h1> Ticket Reserveren </h1>    
         
-        <form  method="post" action="{{ route('sendmailReservering') }}">
+        <form  method="post" action="{{ route('postreservering') }}" id='contact-form'>
             <div class ="input-group">
-                <label for="naam">
-                    Je Naam: 
+                <label for="betaalmethode">
+                    Betaalmethode: 
                 </label>
-                <input type="text" name="naam" id="naam"/>
+                <select name="betaalmethode" id="betaalmethode">
+                  <option value="IDeal">IDeal</option>
+                  <option value="Creditcard">Creditcard</option>
+                </select>
+                
+                
             </div>
-            
-              <div class ="input-group">
-                <label for="tussenvoegsel">
-                    Tussenvoegsel
-                </label>
-                <input type="text" name="tussenvoegsel" id="tussenvoegsel"/>
-            </div>
-            
-              <div class ="input-group">
-                <label for="achternaam">
-                    Achternaam
-                </label>
-                <input type="text" name="achternaam" id="achternaam"/>
-            </div>
-            
-                 
-            <button type="submit" class="btn">Berichtje versturen</button>
+            <button type="submit" class="btn">Bevestigen</button>
             <input type="hidden" name="_token" value="{{ Session::token() }}"/>
         </form>
-        
-        
-        <ul>
-            <li>ICT-OPEN</li>
-            <li>Teststraat 6</li>
-            <li>2345BH Woerden</li>
-            <li>Email: Info@ict-open.nl</li>
-            <li>Tel: 0348-555555</li>
-        </ul>
+         @include('includes.info-box')
 </section>
 
 

@@ -22,6 +22,7 @@ class AanmeldingController extends Controller
         $aanmelding->onderwerp = $request['onderwerp'];
         $aanmelding->wensen = $request['wensen'];
         $aanmelding->omschrijving = $request['omschrijving'];
+        $aanmelding->voorkeur = $request['voorkeur'];
         $aanmelding->save();
         return redirect()->route('Aanmelding')->with(['success' => 'Message succesfully sent!']);
     }

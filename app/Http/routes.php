@@ -32,19 +32,17 @@ Route::group(['prefix' => 'agenda'], function() {
 
 Route::group(['prefix' => 'reservering'], function() {
 
-    Route::get('/', function() {
-        return view('layouts.reserveren.reservering');
-    })->name('reserveren');
+    Route::get('/', [
+        'uses' => 'ReserveringController@getReserveringIndex',
+        'as' => 'reservering'
+        ]);
+     
+    Route::post('/postreservering', [
+        'uses' => 'ReserveringController@postReservering',
+        'as' => 'postreservering'
+        ]); 
 
 });    
-
-    Route::post('/new', [
-        'uses' => 'ReserveringController@postReservering',
-        'as' => 'sendmailReservering'
-    ]);
-
-
-
 
 
 Route::group(['prefix' => 'aanmelding'], function() {
@@ -70,13 +68,43 @@ Route::group(['prefix' => 'aanmelding'], function() {
 
 }); 
 
-Route::group(['prefix' => 'organisator'], function(){
 
-    Route::get('/login', function() {
-       return view('layouts.organisator.login');
-    })->name('login');
+
+
+Route::group(['prefix' => 'organisator'], function(){
+    
+
 });
 
+
+
+
+    Route::get('/organisator/login', [
+        'uses' => 'UserController@getLogin',
+        'as' => 'user.login'
+        ]);
+        
+    Route::post('/organisator/login', [
+        'uses' => 'UserController@postLogin',
+        'as' => 'user.login'
+        ]);
+        
+    Route::get('/organisator/logout', [
+        'uses' => 'UserController@getLogout',
+        'as' => 'user.logout'
+        ]);    
+
+
+    Route::group(['middleware' => 'auth'], function(){
+        
+    Route::get('/organisator/dashboard', [
+        'uses' => 'UserController@getDashboard',
+        'as' => 'user.dashboard'
+        ]);
+    });
+
+
+        
     Route::get('/contact', [
         'uses' => 'ContactMessageController@getContactIndex',
         'as' => 'contact'

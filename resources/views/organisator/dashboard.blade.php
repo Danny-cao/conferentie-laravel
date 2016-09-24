@@ -2,6 +2,6 @@
 
 @section('content')
 
-<h1>  Test organisator </h1>
+<h1>  Test organisator Login bitch</h1>
 
 @endsection
