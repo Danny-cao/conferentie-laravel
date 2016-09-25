@@ -17,7 +17,7 @@ class CreateTicketsTable extends Migration
             $table->integer('idMaaltijd')->unsigned();
             $table->foreign('idMaaltijd')->references('id')->on('maaltijds');
             $table->string('soort');
-            $table->string('prijs');
+            $table->float('prijs');
             $table->integer('beschikbaar');
         });
     }

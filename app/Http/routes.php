@@ -41,6 +41,11 @@ Route::group(['prefix' => 'reservering'], function() {
         'uses' => 'ReserveringController@postReservering',
         'as' => 'postreservering'
         ]); 
+    
+    Route::get('reservering_compleet', [
+        'uses' => 'ReserveringController@getReserveringCompleet',
+        'as' => 'reservering.compleet'
+        ]);    
 
 });    
 
