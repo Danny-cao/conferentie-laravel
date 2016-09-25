@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Reservering extends Model
+class ticket extends Model
 {
     //
 }

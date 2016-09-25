@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Aanmelding extends Model
+class reservering extends Model
 {
     //
 }
