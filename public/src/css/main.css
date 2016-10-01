@@ -177,5 +177,9 @@ header nav a:hover {
     width: 400px;
 }
 
+th {
+    text-align: left;
+}
+
 
 

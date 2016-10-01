@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\User;
 use App\reservering;
 use Illuminate\Support\Facades\Event;
-
+use Illuminate\Support\Facades\DB;
 
 class ReserveringController extends Controller
 {
@@ -24,10 +24,19 @@ class ReserveringController extends Controller
     
     
     public function postReservering(Request $request)
-    {
+    { 
+        
+        $this->validate($request, [
+            
+            'ticket'                => 'required|',
+            'naam'                  => 'required|max:30',
+            'achternaam'            => 'required|max:30',
+            'email'                 => 'required|email'
+        ]
+    );
         
         $user = new User();
-        $user->id = microtime() * 15 * rand(9999, 9999999); 
+        $user->id = DB::table('users')->max('id') + 1;
         $user->naam = $request['naam'];
         $user->tussenvoegsel = $request['tussenvoegsel'];
         $user->achternaam = $request['achternaam'];
@@ -39,12 +48,20 @@ class ReserveringController extends Controller
         $user->save();
         
         $reservering = new Reservering();
+        $reservering->id = DB::table('reserverings')->max('id') + 1;
         $reservering->idticket = $request['ticket'];
         $reservering->idUser = $user->id;
         $reservering->betaalmethode = $request['betaalmethode'];
-        $reservering->barcode = $reservering->idTicket . $user->id;
-        $reservering->prijs = 75;
+        $reservering->barcode = $reservering->id . $reservering->idticket . $user->id;
+        $reservering->prijs = DB::table('tickets')->where('id', $reservering->idticket )->value('prijs');
         $reservering->save();
         return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol Gereserveerd!']);
+    }
+    
+    public function testDBQuery()
+    {
+        $users = DB::table('users')->get();
+        
+        return view('layouts.agenda.agenda', ['users' =>$users]);
     }
 }

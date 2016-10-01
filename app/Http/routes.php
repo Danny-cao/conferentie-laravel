@@ -19,9 +19,10 @@
 
 Route::group(['prefix' => 'agenda'], function() {
 
-    Route::get('/', function() {
-        return view('layouts.agenda.agenda');
-    })->name('agenda');
+    Route::get('/', [
+        'uses' => 'ReserveringController@testDBQuery',
+        'as' => 'agenda'
+        ]);
 
     Route::get('/vervolg', function() {
        return view('layouts.agenda.vervolg');

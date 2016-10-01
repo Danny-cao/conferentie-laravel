@@ -10,14 +10,41 @@
         <form  method="post" action="{{ route('postreservering') }}" id='reserveren'>
             
             <div class ="input-group">
-                <label for="ticket">
-                    Kies een ticket: 
-                </label>
-                <input type="radio" name="ticket" id="ticket" value="1"> Vrijdag<br>
-                <input type="radio" name="ticket" id="ticket" value="2"> Zaterdag<br>
-                <input type="radio" name="ticket" id="ticket" value="3"> Zondag<br>
-                <input type="radio" name="ticket" id="ticket" value="4"> Weekend<br>
-                <input type="radio" name="ticket" id="ticket" value="5"> Passe-partout<br>
+
+                <table style="width:80%">
+                    
+                <tr>
+                    <th>Kies een ticket</th>
+                    <th>Prijs</th>
+                </tr>        
+                <tr>
+                    <td><input type="checkbox" value="1" name="ticket" id="ticket"> Vrijdag</td>
+                    <td>€ 45</td>    
+                </tr>
+                <tr>
+                    <td><input type="checkbox" value="2" name="ticket" id="ticket"> Zaterdag</td>
+                    <td>€ 60</td>
+                </tr>           
+                <tr>
+                    <td><input type="checkbox" value="3" name="ticket" id="ticket"> Zondag</td>
+                    <td>€ 30</td>  
+                </tr>
+                <tr>
+                    <td><input type="checkbox" value="4" name="ticket" id="ticket"> Weekend</td>
+                    <td>€ 80</td>    
+                </tr>
+                
+                <tr>
+                    <td><input type="checkbox" value="5" name="ticket" id="ticket"> Passe-partout</td>
+                    <td>€ 100</td>
+                </tr>    
+                
+                
+                    
+                    
+                    
+
+                </table>
             </div>
             
              <div class ="input-group">

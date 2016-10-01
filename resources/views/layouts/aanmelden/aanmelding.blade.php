@@ -9,6 +9,61 @@
         <br><br>
          <br><br>
         <form  method="post" action="{{ route('postaanmelding') }}" id="contact-form">
+             
+             <div class ="input-group">
+                <label for="naam">
+                    naam: 
+                </label>
+                <input type="text" name="naam" id="naam" placeholder="naam"/>
+            </div>
+            
+            <div class ="input-group">
+                <label for="tussenvoegsel">
+                    naam: 
+                </label>
+                <input type="text" name="tussenvoegsel" id="tussenvoegsel" placeholder="tussenvoegsel"/>
+            </div>
+            
+            <div class ="input-group">
+                <label for="achternaam">
+                    naam: 
+                </label>
+                <input type="text" name="achternaam" id="achternaam" placeholder="achternaam"/>
+            </div>
+            
+            <div class ="input-group">
+                <label for="email">
+                    naam: 
+                </label>
+                <input type="text" name="email" id="email" placeholder="email"/>
+            </div>
+            
+            <div class ="input-group">
+                <label for="telnummer">
+                    telnummer: 
+                </label>
+                <input type="text" name="email" id="email" placeholder="email"/>
+            </div>
+            
+            <div class ="input-group">
+                <label for="email">
+                    email: 
+                </label>
+                <input type="text" name="email" id="email" placeholder="email"/>
+            </div>
+            
+            <div class ="input-group">
+                <label for="adres">
+                    adres: 
+                </label>
+                <input type="text" name="adres" id="adres" placeholder="adres"/>
+            </div>
+            
+            
+            
+            
+            
+            
             <div class ="input-group">
                 <label for="onderwerp">
                     Onderwerp: 

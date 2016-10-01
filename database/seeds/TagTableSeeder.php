@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Tag;
 
-class DatabaseSeeder extends Seeder
+class TagTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +12,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-       $this->call(ZaalTableSeeder::class);
+        $tag = new Tag();
+        $tag->tag = "";
+        $tag->save();
+        
+        
     }
 }
