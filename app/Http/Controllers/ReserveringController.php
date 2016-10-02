@@ -22,6 +22,54 @@ class ReserveringController extends Controller
         return view('layouts.reserveren.reservering_compleet');
     }
     
+     public function getReserveringTest()
+    {
+        
+        $query = DB::table('tickets')->get();
+        $queryMaaltijd = DB::table('maaltijds')->get();
+
+        return view('layouts.reserveren.reservering_test')->with(['tickets'=>$query, 'maaltijds'=>$queryMaaltijd]);    
+        
+    }
+    
+    public function postReserveringTest(Request $request)
+    {
+        $post = $request->all();
+        
+        $usertest = array(
+            
+                        'id' => DB::table('users')->max('id') + 1,
+                        'naam' => $post['naam'],
+                        'tussenvoegsel' => $post['tussenvoegsel'],
+                        'achternaam' => $post['achternaam'],
+                        'email' => $post['email'],
+                        'telnummer' => $post['telnummer'],
+                        'adres' => $post['adres'],
+                        'woonplaats' => $post['woonplaats'],
+                        'role' => "bezoeker",
+                             
+                      );
+        
+        $j = DB::table('users')->insertgetId($usertest);
+        if($j >0)
+        {
+            for($i=0;$i < count($post['ticket']); $i++)
+            {
+                $ticketTest = array(
+                             'id' => DB::table('reserverings')->max('id') + 1,
+                             'idUser' => $j,
+                             'idTicket' => $post['ticket'][$i],
+                             'betaalmethode' => $post['betaalmethode'],
+                             'barcode' => $j . $post['ticket'][$i].time(),
+                             'prijs' => $post['price'][$i]
+                    );
+                    DB::table('reserverings')->insert($ticketTest);
+            }
+            return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol Gereserveerd!']);
+        }
+    }
+    
+
     
     public function postReservering(Request $request)
     { 

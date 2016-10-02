@@ -47,8 +47,22 @@ Route::group(['prefix' => 'reservering'], function() {
         'uses' => 'ReserveringController@getReserveringCompleet',
         'as' => 'reservering.compleet'
         ]);    
-
+        
+        Route::get('/reservering_test', [
+        'uses' => 'ReserveringController@getReserveringTest',
+        'as' => 'reservering.test'
+        ]);      
+        
+        Route::post('/postReserveringtest', [
+        'uses' => 'ReserveringController@postReserveringTest',
+        'as' => 'saveorder'
+        ]);    
 });    
+
+
+
+
+
 
 
 Route::group(['prefix' => 'aanmelding'], function() {
