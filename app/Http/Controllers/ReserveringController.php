@@ -34,7 +34,13 @@ class ReserveringController extends Controller
     
     public function postReserveringTest(Request $request)
     {
-        $post = $request->all();
+       
+        $this->validate($request, [
+                'naam' => 'required',
+                'email' => 'required|email',
+                'ticket' => 'required'
+            ]);
+         $post = $request->all();    
         
         $usertest = array(
             

@@ -1,0 +1,11 @@
+--2016-10-03 12:11:35--  https://toolbelt.heroku.com/install-ubuntu.sh
+Resolving toolbelt.heroku.com (toolbelt.heroku.com)... 54.235.127.240, 23.23.162.52, 54.243.121.189
+Connecting to toolbelt.heroku.com (toolbelt.heroku.com)|54.235.127.240|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 719 [text/plain]
+Saving to: ‘install-ubuntu.sh’
+
+     0K                                                       100%  147M=0s
+
+2016-10-03 12:11:36 (147 MB/s) - ‘install-ubuntu.sh’ saved [719/719]
+
