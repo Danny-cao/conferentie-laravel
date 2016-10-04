@@ -27,6 +27,22 @@ class UserController extends Controller
         return view('organisator.dashboard');
     }
     
+    public function getAanvraag()
+    {
+        return view('organisator.aanvraag');
+    }
+    
+    public function getConferentie()
+    {
+        return view('organisator.conferentie');
+    }
+    
+    public function getSprekers()
+    {
+        return view('organisator.sprekers');
+    }
+    
+    
     public function postLogin(Request $request)
     {
         $this->validate($request, [

@@ -117,10 +117,26 @@ Route::group(['prefix' => 'organisator'], function(){
 
     Route::group(['middleware' => 'auth'], function(){
         
-    Route::get('/organisator/dashboard', [
+    Route::get('/organisator/aanvraag', [
+        'uses' => 'UserController@getAanvraag',
+        'as' => 'user.aanvraag'
+        ]);
+    
+     Route::get('/organisator/conferentie', [
+        'uses' => 'UserController@getConferentie',
+        'as' => 'user.conferentie'
+        ]);    
+        
+     Route::get('/organisator/sprekers', [
+        'uses' => 'UserController@getSprekers',
+        'as' => 'user.sprekers'
+        ]);    
+        
+     Route::get('/organisator/dashboard', [
         'uses' => 'UserController@getDashboard',
         'as' => 'user.dashboard'
-        ]);
+        ]);    
+        
     });
 
 

@@ -15,8 +15,6 @@ function totalamount()
         $('.total').html(t);
     }
 
-
-
     $(function(){
         $('.add').click(function(){
             var ticket = $('.ticket').html();
@@ -86,6 +84,7 @@ function totalamount()
 <section class="reservering"> 
 
         <h1> Ticket Reserveren </h1>    
+        @include('includes.info-box')
         
         
               <table style="width:80%">
@@ -93,33 +92,14 @@ function totalamount()
                     <th>Beschikbare tickets:</th>
                     <th>Prijs</th>
                     <th>beschikbare plekken</th>
-                </tr>        
+                </tr>  
+                @foreach($tickets as $ticket)
                 <tr>
-                    <td>Vrijdag</td>    
-                    <td>€ 45</td>
-                    <td>250</td>
+                    <td>{{ $ticket->soort }}</td>    
+                    <td>€{{ $ticket->prijs }}</td>
+                    <td>{{ $ticket->beschikbaar }}</td>
                 </tr>
-                <tr>
-                    <td>Zaterdag</td>    
-                    <td>€ 60</td>
-                    <td>250</td>
-                </tr>           
-                <tr>
-                    <td>Zondag</td>    
-                    <td>€ 30</td>  
-                    <td>250</td>
-                </tr>
-                <tr>
-                    <td>Weekend</td>    
-                    <td>€ 80</td>    
-                    <td>250</td>
-                </tr>
-                
-                <tr>
-                    <td>Passe-parout</td>    
-                    <td>€ 100</td>
-                    <td>250</td>
-                </tr>    
+                  @endforeach
         </table>
         
         
@@ -133,7 +113,7 @@ function totalamount()
 			<th>Maaltijd</th>
 			<th>Price</th>
 			<th>Amount</th>
-			<th><input type="button" class="btn btn-primary add" value="+"></th>
+			<th><input type="button" class="btn btn-primary add" value="Ticket toevoegen"></th>
     	</thead>
     	<tbody class="body">
     		<tr>
@@ -176,7 +156,7 @@ function totalamount()
                 <label for="naam">
                     Voornaam: 
                 </label>
-                <input type="text" name="naam" id="naam" placeholder="je naam"/>
+                <input type="text" name="naam" id="naam" placeholder="je naam" value="{{ Request::old('naam') }}"/>
             </div>
             
                <div class ="input-group">
@@ -190,14 +170,14 @@ function totalamount()
                 <label for="achternaam">
                     achternaam: 
                 </label>
-                <input type="text" name="achternaam" id="achternaam"/>
+                <input type="text" name="achternaam" id="achternaam" value="{{ Request::old('achternaam') }}"/>
             </div>
             
             <div class ="input-group">
                 <label for="email">
                     email: 
                 </label>
-                <input type="text" name="email" id="email"/>
+                <input type="text" name="email" id="email" value="{{ Request::old('email') }}"/>
             </div>
             
             <div class ="input-group">
@@ -238,7 +218,6 @@ function totalamount()
     <input type="submit" value="reserveren" name="submit" class="btn btn-primary">
     </form>
        
-         @include('includes.info-box')
 </section>
 
 

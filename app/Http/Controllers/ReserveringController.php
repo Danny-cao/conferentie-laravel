@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
 use App\reservering;
+use App\ticket;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\DB;
+use App\Events\MessageTicket;
 
 class ReserveringController extends Controller
 {
@@ -27,7 +29,6 @@ class ReserveringController extends Controller
         
         $query = DB::table('tickets')->get();
         $queryMaaltijd = DB::table('maaltijds')->get();
-
         return view('layouts.reserveren.reservering_test')->with(['tickets'=>$query, 'maaltijds'=>$queryMaaltijd]);    
         
     }
@@ -37,8 +38,8 @@ class ReserveringController extends Controller
        
         $this->validate($request, [
                 'naam' => 'required',
-                'email' => 'required|email',
-                'ticket' => 'required'
+                'email' => 'required|email'
+                
             ]);
          $post = $request->all();    
         
@@ -71,6 +72,7 @@ class ReserveringController extends Controller
                     );
                     DB::table('reserverings')->insert($ticketTest);
             }
+            Event::fire(new MessageTicket($ticketTest));
             return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol Gereserveerd!']);
         }
     }

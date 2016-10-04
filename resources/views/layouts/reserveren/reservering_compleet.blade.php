@@ -3,8 +3,6 @@
 @section('content')
 @include('includes.info-box')
 
-reservering compleet ! 
-
 
 
 @endsection
