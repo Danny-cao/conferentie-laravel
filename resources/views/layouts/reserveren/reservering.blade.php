@@ -11,7 +11,7 @@
             
             <div class ="input-group">
 
-                <table style="width:80%">
+                <table style="width:80%;margin-bootom:50px;">
                     
                 <tr>
                     <th>Kies een ticket</th>
@@ -39,12 +39,9 @@
                     <td>€ 100</td>
                 </tr>    
                 
-                
-                    
-                    
-                    
-
                 </table>
+                
+                
             </div>
             
              <div class ="input-group">

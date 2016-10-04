@@ -99,7 +99,7 @@ function totalamount()
                     <td>€{{ $ticket->prijs }}</td>
                     <td>{{ $ticket->beschikbaar }}</td>
                 </tr>
-                  @endforeach
+                @endforeach
         </table>
         
         
@@ -108,11 +108,11 @@ function totalamount()
     <table class="table table-bordered table-hover">
     	<thead>
     	    <th>N</th>
-			<th>Ticket</th>    		
-			<th>Price</th>
-			<th>Maaltijd</th>
-			<th>Price</th>
-			<th>Amount</th>
+			<th>Ticket:</th>    		
+			<th>Prijs ticket:</th>
+			<th>Maaltijd:</th>
+			<th>Prijs Maaltijd:</th>
+			<th>Totaal:</th>
 			<th><input type="button" class="btn btn-primary add" value="Ticket toevoegen"></th>
     	</thead>
     	<tbody class="body">
@@ -121,29 +121,36 @@ function totalamount()
     		    <th class="no">1</th>
     			<td>
     			<select name="ticket[]" class="ticket">
+    			    <option selected="selected">Kies een Ticket</option>
     			    @foreach($tickets as $ticket)
     			        <option ticket-prijs="{{ $ticket->prijs }}" value="{{ $ticket->id }}">{{ $ticket->soort }}</option>
     			    @endforeach
     			    
-    			</select>    				
+    			</select>    
+    		
+    			
+    			
+    			
     			</td>
-    			<td><input type="text" name="price[]" class="price form-control"></td>
+    			<td><input type="text" name="price[]" class="price form-control" readonly></td>
     			<td>
     			<select name="maaltijd[]" class="maaltijd">
-    			    
+    			
+    			<option selected="selected">Geen</option>
 			    @foreach($maaltijds as $maaltijd)
     			        <option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->soortmaaltijd }}</option>
     			@endforeach
+    			
     			    
     			</select>    				
     			</td>
-	        	<td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd form-control"></td>
-    			<td><input type="text" name="amount[]" class="amount form-control"></td>
-    			<td><a href="#" class="btn btn-danger delete">verwijder</a></td>
+	        	<td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd form-control" readonly></td>
+    			<td><input type="text" name="amount[]" class="amount form-control" readonly></td>
+    			
     		</tr>
     	</tbody>
     	<tfoot>
-                <th>Total:<b class="total">0</b></th>    	
+                <th>Totale prijs:<b class="total">0</b></th>    	
     	</tfoot>    
     	
     </table>

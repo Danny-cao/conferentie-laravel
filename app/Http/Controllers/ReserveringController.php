@@ -29,6 +29,7 @@ class ReserveringController extends Controller
         
         $query = DB::table('tickets')->get();
         $queryMaaltijd = DB::table('maaltijds')->get();
+
         return view('layouts.reserveren.reservering_test')->with(['tickets'=>$query, 'maaltijds'=>$queryMaaltijd]);    
         
     }
@@ -38,7 +39,8 @@ class ReserveringController extends Controller
        
         $this->validate($request, [
                 'naam' => 'required',
-                'email' => 'required|email'
+                'email' => 'required|email',
+                'ticket' => 'required'
                 
             ]);
          $post = $request->all();    
@@ -67,8 +69,8 @@ class ReserveringController extends Controller
                              'idUser' => $j,
                              'idTicket' => $post['ticket'][$i],
                              'betaalmethode' => $post['betaalmethode'],
-                             'barcode' => $j . $post['ticket'][$i].time(),
-                             'prijs' => $post['price'][$i]
+                             'barcode' => $i .$j . $post['ticket'][$i].time(),
+                             'prijs' => $post['amount'][$i],
                     );
                     DB::table('reserverings')->insert($ticketTest);
             }

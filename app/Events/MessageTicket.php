@@ -16,9 +16,9 @@ class MessageTicket extends Event
      *
      * @return void
      */
-    public function __construct(reservering $reservering)
+    public function __construct()
     {
-        $this->reservering = reservering;
+        
     }
 
     /**
