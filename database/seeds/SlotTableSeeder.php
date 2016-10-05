@@ -11,6 +11,9 @@ class SlotTableSeeder extends Seeder
      */
     public function run()
     {
+        
+        //vrijdag zaal 1
+        
         $slot = new Slot();
         $slot->idZaal = "1";
         $slot->idTag = "1";
@@ -58,7 +61,7 @@ class SlotTableSeeder extends Seeder
         
         
         
-        
+        //vrijdag zaal 2
         $slot = new Slot();
         $slot->idZaal = 2;
         $slot->idTag = 1;
@@ -106,7 +109,7 @@ class SlotTableSeeder extends Seeder
         
         
         
-        
+        //vrijdag zaal 3
         
         $slot = new Slot();
         $slot->idZaal = 3;
@@ -157,7 +160,7 @@ class SlotTableSeeder extends Seeder
         
         
         
-        
+        //vrijdag zaal 4
         
         $slot = new Slot();
         $slot->idZaal = 4;

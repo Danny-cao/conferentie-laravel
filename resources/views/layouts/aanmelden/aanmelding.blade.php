@@ -14,11 +14,83 @@
             
             <p> Beschikbare Slots:</p>
             
-            <table>
-                @foreach($Slots as $slot)
-                <tr>
-                    <td><input type="radio" name="slot" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}}<br></td>    
+            
+            
+            <table class ="vrijdag">
+                <h2> Vrijdag </h2>
+                 <tr>
+                    <th></th><th>Begintijd</th><th>Eindtijd</th><th>Zaal 1</th><th>Zaal 2</th><th>Zaal 3</th><th>Zaal 4</th>
                 </tr>
+                @foreach($Slots as $slot)
+                @if($slot->dag == "vrijdag")
+                    @if($slot->idZaal == 1)
+                <tr>
+                    <td><input type="radio" name="slot" value="{{ $slot->id }}"></td> 
+                    <td>{{ $slot->begintijd}}</td>
+                    <td>{{ $slot->eindtijd }}</td>
+                    <td>{{ $slot->idZaal}}</td>
+                    @endif
+                    <td><input type="radio" name="slot" value="{{ $slot->id }}">{{ $slot->idZaal}}</td>
+                    <td><input type="radio" name="slot" value="{{ $slot->id }}">{{ $slot->idZaal}}</td>
+                    <td><input type="radio" name="slot" value="{{ $slot->id }}">{{ $slot->idZaal}}</td>
+                    
+                    @if($slot->idZaal == 2)
+                    <td></td>
+                    @endif
+                </tr>
+                    
+                @endif
+                @endforeach
+                
+                
+            </table>
+            
+            <table class="zaterdag">
+                <h2> Zaterdag </h2>
+                
+                @foreach($Slots as $slot)
+                @if($slot->dag == "zaterdag")
+                <tr>
+                    <td><input type="radio" name="slot" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}} - {{ $slot->idZaal}}<br></td>    
+                </tr>
+                @endif
+                @endforeach
+                
+                
+            </table>
+            
+            <table class="zondag">
+                Zondag
+                <tr>
+                    <th>Beschikbare tickets:</th>
+                    <th>Prijs</th>
+                    <th>beschikbaar</th>
+                </tr>  
+                @foreach($Slots as $slot)
+                @if($slot->dag == "zondag")
+                
+                <tr>
+                    @if ($slot->idZaal == 1)
+                    <td><input type="radio" name="slot" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}} - {{ $slot->idZaal}}<br></td>   
+                    @endif
+                    
+                    @if ($slot->idZaal == 2)
+                    <td><input type="radio" name="slot" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}} - {{ $slot->idZaal}}<br></td>    
+                    @endif
+                    
+                    @if ($slot->idZaal == 3)
+                    <td><input type="radio" name="slot" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}} - {{ $slot->idZaal}}<br></td>    
+                    @endif
+                    
+                    @if ($slot->idZaal == 4)
+                    <td><input type="radio" name="slot" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}} - {{ $slot->idZaal}}<br></td>    
+                    @endif
+                    
+                </tr>
+
+                <br>
+                
+                 @endif
                 @endforeach
                 
             </table>
