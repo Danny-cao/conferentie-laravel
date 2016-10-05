@@ -13,8 +13,13 @@ class TagTableSeeder extends Seeder
     public function run()
     {
         $tag = new Tag();
-        $tag->tag = "";
+        $tag->tag = "javascript";
         $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag = "PHP";
+        $tag->save();
+        
         
         
     }

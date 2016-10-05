@@ -118,8 +118,8 @@ class ReserveringController extends Controller
     
     public function testDBQuery()
     {
-        $users = DB::table('users')->get();
+        $slots = DB::table('slots')->get();
         
-        return view('layouts.agenda.agenda', ['users' =>$users]);
+        return view('layouts.agenda.agenda', ['slots' =>$slots]);
     }
 }

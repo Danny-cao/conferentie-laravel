@@ -23,9 +23,9 @@ function totalamount()
             
             var newTicketRow = '<tr><th class="no">'+n+'</th>' +
                 '<td><select name="ticket[]" class="ticket">'+ticket+'</select></td>' + 
-    			'<td><input type="text" name="price[]" class="price form-control"></td>' + 
+    			'<td><input type="text" name="price[]" class="price form-control" readonly></td>' + 
     			'<td><select name="maaltijd[]" class="maaltijd">'+maaltijd+'</select></td>' + 
-	        	'<td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd form-control"></td>' + 
+	        	'<td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd form-control" readonly></td>' + 
     			'<td><input type="text" name="amount[]" class="amount form-control"></td>' + 
     			'<td><a href="#" class="btn btn-danger delete">verwijder</a></td></tr>';
     	$('.body').append(newTicketRow);		
@@ -91,7 +91,7 @@ function totalamount()
              <tr>
                     <th>Beschikbare tickets:</th>
                     <th>Prijs</th>
-                    <th>beschikbare plekken</th>
+                    <th>beschikbaar</th>
                 </tr>  
                 @foreach($tickets as $ticket)
                 <tr>

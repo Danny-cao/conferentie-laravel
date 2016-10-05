@@ -4,21 +4,29 @@
 
 <h1>  Test agenda </h1>
 
-         <form>
+
              
              
-             
-    @foreach ($users as $user)
-    <td>
-         <tr>{{ $user->naam }}</tr>
-     <input type="radio" name="{{ $user->naam }}" id="ticket" value="{{ $user->naam }}">{{$user->naam}}<br>
-             </td>    
-             @endforeach
-             
-         <input type="text" >
-         
-             
-             </form>
+    <tr>
+             <th>Begintijd</th>
+			<th>Eindtijd</th>    		
+			<th>dag</th>
+			<th>status:</th>
+			</br>
+	</tr>	     
+    @foreach ($slots as $slot)
+	
+    <tr>
+         <td>{{ $slot->begintijd }}</td>
+         <td>{{ $slot->eindtijd }}</td>
+         <td>{{ $slot->dag }}</td>
+         <td>{{ $slot->status }}</td>
+         </br>
+    </tr>     
+          
+ 
+    @endforeach
+        
  
 
 

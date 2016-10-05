@@ -5,10 +5,23 @@
 
 <section class="Aanmelding"> 
 
+
+
         <h1> Aanmelding spreker </h1>
         <br><br>
          <br><br>
         <form  method="post" action="{{ route('postaanmelding') }}" id="contact-form">
+            
+            <p> Beschikbare Slots:</p>
+            
+            <table>
+                @foreach($Slots as $slot)
+                <tr>
+                    <td><input type="radio" name="slot" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}}<br></td>    
+                </tr>
+                @endforeach
+                
+            </table>
              
              <div class ="input-group">
                 <label for="naam">
@@ -19,30 +32,16 @@
             
             <div class ="input-group">
                 <label for="tussenvoegsel">
-                    naam: 
+                    tussenvoegsel: 
                 </label>
                 <input type="text" name="tussenvoegsel" id="tussenvoegsel" placeholder="tussenvoegsel"/>
             </div>
             
             <div class ="input-group">
                 <label for="achternaam">
-                    naam: 
+                    achternaam: 
                 </label>
                 <input type="text" name="achternaam" id="achternaam" placeholder="achternaam"/>
-            </div>
-            
-            <div class ="input-group">
-                <label for="email">
-                    naam: 
-                </label>
-                <input type="text" name="email" id="email" placeholder="email"/>
-            </div>
-            
-            <div class ="input-group">
-                <label for="telnummer">
-                    telnummer: 
-                </label>
-                <input type="text" name="email" id="email" placeholder="email"/>
             </div>
             
             <div class ="input-group">
@@ -53,10 +52,24 @@
             </div>
             
             <div class ="input-group">
+                <label for="telnummer">
+                    telnummer: 
+                </label>
+                <input type="text" name="telnummer" id="telnummer" placeholder="telnummer"/>
+            </div>
+            
+            <div class ="input-group">
                 <label for="adres">
                     adres: 
                 </label>
                 <input type="text" name="adres" id="adres" placeholder="adres"/>
+            </div>
+            
+            <div class ="input-group">
+                <label for="woonplaats">
+                    woonplaats: 
+                </label>
+                <input type="text" name="woonplaats" id="woonplaats" placeholder="woonplaats"/>
             </div>
             
             
@@ -82,7 +95,12 @@
                 <label for="voorkeur">
                     Voorkeur:
                 </label>
-                <input type="number" name="voorkeur" id="voorkeur" placeholder="voorkeur"/>
+                                @foreach($Slots as $slot)
+                <tr>
+                    <td><input type="radio" name="voorkeur" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}}<br></td>    
+
+                </tr>
+                @endforeach
             </div>
             
                   <div class ="input-group">
