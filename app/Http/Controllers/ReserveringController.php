@@ -74,7 +74,7 @@ class ReserveringController extends Controller
                     );
                     DB::table('reserverings')->insert($ticketTest);
             }
-            Event::fire(new MessageTicket($ticketTest));
+            Event::fire(new MessageTicket());
             return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol Gereserveerd!']);
         }
     }

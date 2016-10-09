@@ -5,7 +5,7 @@
 
 <section class="reservering"> 
 
-        <h1> Ticket Reserveren </h1>    
+        <h1> Ticket Reserveren </h1> 
         
         <form  method="post" action="{{ route('postreservering') }}" id='reserveren'>
             

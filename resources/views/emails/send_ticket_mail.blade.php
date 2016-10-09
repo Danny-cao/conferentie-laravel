@@ -17,5 +17,7 @@
     <li>Dag: </li> 
 </ul>
 
+{!! QrCode::size(100)->generate('test123'); !!}
+
 <p> Uw ticket zit in de bijlage</p>
 

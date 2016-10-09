@@ -87,7 +87,7 @@ function totalamount()
         @include('includes.info-box')
         
         
-              <table style="width:80%">
+        <table style="width:80%">
              <tr>
                     <th>Beschikbare tickets:</th>
                     <th>Prijs</th>
@@ -102,6 +102,13 @@ function totalamount()
                 @endforeach
         </table>
         
+                    
+                    <div class="visible-print text-center">
+                
+            </div>
+        
+
+
         
          <form action="{{ route('saveorder') }}" method="post">
     
