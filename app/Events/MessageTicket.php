@@ -10,15 +10,18 @@ use App\reservering;
 class MessageTicket extends Event
 {
     use SerializesModels;
+    public $reservering = [];
+    public $user = [];
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct( $reservering,$user)
     {
-        
+        $this->reservering = $reservering;
+        $this->user = $user;
     }
 
     /**

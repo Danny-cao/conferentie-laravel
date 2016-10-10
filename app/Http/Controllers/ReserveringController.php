@@ -59,24 +59,25 @@ class ReserveringController extends Controller
                              
                       );
         
+        
+        
         $j = DB::table('users')->insertgetId($usertest);
-        if($j >0)
-        {
+            
+            $ticketTests = []; 
             for($i=0;$i < count($post['ticket']); $i++)
             {
-                $ticketTest = array(
-                             'id' => DB::table('reserverings')->max('id') + 1,
+                
+                 $ticketTests[] = reservering::create([
                              'idUser' => $j,
                              'idTicket' => $post['ticket'][$i],
                              'betaalmethode' => $post['betaalmethode'],
                              'barcode' => $i .$j . $post['ticket'][$i].time(),
-                             'prijs' => $post['amount'][$i],
+                             'prijs' => $post['amount'][$i],]
                     );
-                    DB::table('reserverings')->insert($ticketTest);
+                
             }
-            Event::fire(new MessageTicket());
+            Event::fire(new MessageTicket($ticketTests,$usertest));
             return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol Gereserveerd!']);
-        }
     }
     
 

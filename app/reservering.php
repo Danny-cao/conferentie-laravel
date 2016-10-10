@@ -11,4 +11,12 @@ class reservering extends Model
     {
    return $this->belongsTo('App\User');
     }
+    
+    protected $fillable = [
+        'idUser',
+        'idTicket',
+        'betaalmethode',
+        'barcode',
+        'prijs',
+        ];
 }

@@ -27,13 +27,15 @@ class SendTicket
      */
     public function handle(MessageTicket $event)
     {
-        $reservering_ticket = "Ticket Reservering";
+        $reservering_ticket = $event->reservering;
+        $user = $event->user;
         $pathToFile = ('src/tickets/ticket.pdf');
+        //dd($event);
         
-         Mail::send('emails.send_ticket_mail', ['reservering_ticket' => $reservering_ticket, 'pathToFile' => $pathToFile], function($m) use ($reservering_ticket, $pathToFile){
+         Mail::send('emails.send_ticket_mail', ['reservering_ticket' => $reservering_ticket, 'user' => $user ,'pathToFile' => $pathToFile], function($m) use ($reservering_ticket, $pathToFile, $user){
            $m->from('info@ict-open.nl',' Conferentie ICT-OPEN');
            $m->to('danny.dc.cao@gmail.com', 'Ticket bevestiging');
-           $m->subject($reservering_ticket);
+           $m->subject('ticket');
            $m->attach($pathToFile);
        });
     }
