@@ -59,6 +59,8 @@ Route::group(['prefix' => 'reservering'], function() {
         ]);    
 });    
 
+    Route::get('/getPDF','ReserveringController@getPDF');
+
 
 
 
@@ -72,10 +74,20 @@ Route::group(['prefix' => 'aanmelding'], function() {
         'as' => 'Aanmelding'
         ]);
         
+        
+     Route::get('/aanmelding_compleet', [
+        'uses' => 'AanmeldingController@getAanmeldingCompleet',
+        'as' => 'aanmelding.compleet'
+        ]);    
+        
+        
     Route::post('/postaanmelding', [
         'uses' => 'AanmeldingController@postAanmelding',
         'as' => 'postaanmelding'
         ]);    
+        
+        
+        
     
     Route::get('/vervolg', function() {
         return view('layouts.aanmelden.vervolg');

@@ -34,6 +34,13 @@ class ReserveringController extends Controller
         
     }
     
+    public function getPDF() 
+    {
+        $pdf = PDF::loadView('pdf.customer');
+        return $pdf->download('customer.pdf');
+        
+    }
+    
     public function postReserveringTest(Request $request)
     {
        
@@ -70,13 +77,17 @@ class ReserveringController extends Controller
                  $ticketTests[] = reservering::create([
                              'idUser' => $j,
                              'idTicket' => $post['ticket'][$i],
+                             'idMaaltijd' => $post['maaltijd'][$i],
                              'betaalmethode' => $post['betaalmethode'],
                              'barcode' => $i .$j . $post['ticket'][$i].time(),
                              'prijs' => $post['amount'][$i],]
                     );
                 
             }
+            
             Event::fire(new MessageTicket($ticketTests,$usertest));
+            
+            
             return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol Gereserveerd!']);
     }
     

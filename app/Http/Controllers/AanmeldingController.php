@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Aanmelding;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Slot;
 
 use App\Http\Requests;
 
@@ -18,6 +19,11 @@ class AanmeldingController extends Controller
         
         return view('layouts.aanmelden.aanmelding')->with(['Slots'=>$querySlots]);    
         
+    }
+    
+       public function getAanmeldingCompleet()
+    {
+        return view('layouts.aanmelden.aanmelding_compleet');
     }
     
     public function postAanmelding(Request $request)
@@ -43,6 +49,11 @@ class AanmeldingController extends Controller
         $aanmelding->omschrijving = $request['omschrijving'];
         $aanmelding->voorkeur = $request['voorkeur'];
         $aanmelding->save();
-        return redirect()->route('Aanmelding')->with(['success' => 'Message succesfully sent!']);
+        
+        DB::table('slots')
+            ->where('id', $request['slot'])
+            ->update(['status' => 'onder voorbehoud']);
+        
+        return redirect()->route('aanmelding.compleet')->with(['success' => 'Aanmelding voltooid , U krijgt binnenkort een emailtje of u de conferentie mag geven']);
     }
 }

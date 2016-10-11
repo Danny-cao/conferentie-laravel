@@ -187,14 +187,21 @@ thead{
 
 .vrijdag {
     float:left;
+    border:1px solid black;
+    display:block;
 }
 
 .zaterdag {
     float:left;
+    border:1px solid black;
+    display:block;
 }
 
 .zondag {
     float:left;
+    border:1px solid black;
+    display:block;
+    margin-bottom: 450px;
 }
 
 

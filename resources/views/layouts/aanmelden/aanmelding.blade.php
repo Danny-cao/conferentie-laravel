@@ -13,45 +13,18 @@
         <form  method="post" action="{{ route('postaanmelding') }}" id="contact-form">
             
             <p> Beschikbare Slots:</p>
-            
-            
-            
             <table class ="vrijdag">
-                <h2> Vrijdag </h2>
+              
                  <tr>
-                    <th></th><th>Begintijd</th><th>Eindtijd</th><th>Zaal 1</th><th>Zaal 2</th><th>Zaal 3</th><th>Zaal 4</th>
+                    <th>Vrijdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
                 </tr>
                 @foreach($Slots as $slot)
-                @if($slot->dag == "vrijdag")
-                    @if($slot->idZaal == 1)
+                @if($slot->dag == "vrijdag" && $slot->status == "vrij")
                 <tr>
                     <td><input type="radio" name="slot" value="{{ $slot->id }}"></td> 
                     <td>{{ $slot->begintijd}}</td>
                     <td>{{ $slot->eindtijd }}</td>
                     <td>{{ $slot->idZaal}}</td>
-                    @endif
-                    <td><input type="radio" name="slot" value="{{ $slot->id }}">{{ $slot->idZaal}}</td>
-                    <td><input type="radio" name="slot" value="{{ $slot->id }}">{{ $slot->idZaal}}</td>
-                    <td><input type="radio" name="slot" value="{{ $slot->id }}">{{ $slot->idZaal}}</td>
-                    
-                    @if($slot->idZaal == 2)
-                    <td></td>
-                    @endif
-                </tr>
-                    
-                @endif
-                @endforeach
-                
-                
-            </table>
-            
-            <table class="zaterdag">
-                <h2> Zaterdag </h2>
-                
-                @foreach($Slots as $slot)
-                @if($slot->dag == "zaterdag")
-                <tr>
-                    <td><input type="radio" name="slot" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}} - {{ $slot->idZaal}}<br></td>    
                 </tr>
                 @endif
                 @endforeach
@@ -59,42 +32,42 @@
                 
             </table>
             
-            <table class="zondag">
-                Zondag
-                <tr>
-                    <th>Beschikbare tickets:</th>
-                    <th>Prijs</th>
-                    <th>beschikbaar</th>
-                </tr>  
-                @foreach($Slots as $slot)
-                @if($slot->dag == "zondag")
-                
-                <tr>
-                    @if ($slot->idZaal == 1)
-                    <td><input type="radio" name="slot" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}} - {{ $slot->idZaal}}<br></td>   
-                    @endif
-                    
-                    @if ($slot->idZaal == 2)
-                    <td><input type="radio" name="slot" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}} - {{ $slot->idZaal}}<br></td>    
-                    @endif
-                    
-                    @if ($slot->idZaal == 3)
-                    <td><input type="radio" name="slot" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}} - {{ $slot->idZaal}}<br></td>    
-                    @endif
-                    
-                    @if ($slot->idZaal == 4)
-                    <td><input type="radio" name="slot" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}} - {{ $slot->idZaal}}<br></td>    
-                    @endif
-                    
-                </tr>
+            <table class ="zaterdag">
 
-                <br>
+                 <tr>
+                    <th>Zaterdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
+                </tr>
+                @foreach($Slots as $slot)
+                @if($slot->dag == "zaterdag" && $slot->status == "vrij")
+                <tr>
+                    <td><input type="radio" name="slot" value="{{ $slot->id }}"></td> 
+                    <td>{{ $slot->begintijd}}</td>
+                    <td>{{ $slot->eindtijd }}</td>
+                    <td>{{ $slot->idZaal}}</td>
+                </tr>
+                @endif
+                @endforeach
+            </table>    
                 
-                 @endif
+            <table class ="zondag">
+                
+                 <tr>
+                    <th>Zondag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
+                </tr>
+                @foreach($Slots as $slot)
+                @if($slot->dag == "zondag" && $slot->status == "vrij")
+                <tr>
+                    <td><input type="radio" name="slot" value="{{ $slot->id }}"></td> 
+                    <td>{{ $slot->begintijd}}</td>
+                    <td>{{ $slot->eindtijd }}</td>
+                    <td>{{ $slot->idZaal}}</td>
+                </tr>
+                @endif
                 @endforeach
                 
             </table>
-             
+            
+             <h2> Vul hier uw gegevens in: </h2>
              <div class ="input-group">
                 <label for="naam">
                     naam: 
@@ -153,34 +126,86 @@
                 <label for="onderwerp">
                     Onderwerp: 
                 </label>
-                <input type="text" name="onderwerp" id="onderwerp" placeholder="onderwerp"/>
+                <textarea name="onderwerp" id="onderwerp" rows="10" placeholder="Vul hier uw onderwerp in">{{ Request::old('onderwerp') }}</textarea>
+            </div>
+            
+            <div class ="input-group">
+                <label for="omschrijving">
+                   omschrijving
+                </label>
+                <textarea name="omschrijving" id="omschrijving" rows="10" placeholder="Vul de omschrijving van het onderwerp op">{{ Request::old('omschrijving') }}</textarea>
             </div>
             
               <div class ="input-group">
                 <label for="wensen">
                     Wensen:
                 </label>
-                <input type="text" name="wensen" id="wensen" placeholder="wensen" value="{{ Request::old('wensen')}}"/>
+                 <textarea name="wensen" id="wensen" rows="10" placeholder="Bijvoorbeeld: Beamer of Laptop">{{ Request::old('wensen') }}</textarea>
             </div>
             
             <div class ="input-group">
                 <label for="voorkeur">
                     Voorkeur:
                 </label>
-                                @foreach($Slots as $slot)
-                <tr>
-                    <td><input type="radio" name="voorkeur" value="{{ $slot->id }}">van {{ $slot->begintijd }} tot {{$slot ->eindtijd }} - {{ $slot->dag}}<br></td>    
-
+            
+            
+            <table class ="vrijdag">
+              
+                 <tr>
+                    <th>Vrijdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
                 </tr>
+                @foreach($Slots as $slot)
+                @if($slot->dag == "vrijdag" && $slot->status == "onder voorbehoud")
+                <tr>
+                    <td><input type="radio" name="voorkeur" value="{{ $slot->id }}"></td> 
+                    <td>{{ $slot->begintijd}}</td>
+                    <td>{{ $slot->eindtijd }}</td>
+                    <td>{{ $slot->idZaal}}</td>
+                </tr>
+                @endif
                 @endforeach
+                
+            </table>
+            
+            <table class ="zaterdag">
+
+                 <tr>
+                    <th>Zaterdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
+                </tr>
+                @foreach($Slots as $slot)
+                @if($slot->dag == "zaterdag" && $slot->status == "onder voorbehoud")
+                <tr>
+                    <td><input type="radio" name="voorkeur" value="{{ $slot->id }}"></td> 
+                    <td>{{ $slot->begintijd}}</td>
+                    <td>{{ $slot->eindtijd }}</td>
+                    <td>{{ $slot->idZaal}}</td>
+                </tr>
+                @endif
+                @endforeach
+                
+            </table>    
+                
+            <table class ="zondag">
+                
+                 <tr>
+                    <th>Zondag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
+                </tr>
+                @foreach($Slots as $slot)
+                @if($slot->dag == "zondag" && $slot->status == "onder voorbehoud")
+                <tr>
+                    <td><input type="radio" name="voorkeur" value="{{ $slot->id }}"></td> 
+                    <td>{{ $slot->begintijd}}</td>
+                    <td>{{ $slot->eindtijd }}</td>
+                    <td>{{ $slot->idZaal}}</td>
+                </tr>
+                @endif
+                @endforeach
+                
+            </table>
+
+            
             </div>
             
-                  <div class ="input-group">
-                <label for="omschrijving">
-                   omschrijving
-                </label>
-                <textarea name="omschrijving" id="omschrijving" rows="10" placeholder="omschrijving">{{ Request::old('omschrijving') }}</textarea>
-            </div>
             <button type="submit" class="btn">Aanmelding versturen</button>
             <input type="hidden" name="_token" value="{{ Session::token() }}"/>
         </form>

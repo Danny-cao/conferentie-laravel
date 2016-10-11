@@ -144,6 +144,7 @@ function totalamount()
     			<select name="maaltijd[]" class="maaltijd">
     			
     			<option selected="selected">Geen</option>
+    			
 			    @foreach($maaltijds as $maaltijd)
     			        <option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->soortmaaltijd }}</option>
     			@endforeach

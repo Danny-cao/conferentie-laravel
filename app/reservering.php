@@ -15,6 +15,7 @@ class reservering extends Model
     protected $fillable = [
         'idUser',
         'idTicket',
+        'idMaaltijd',
         'betaalmethode',
         'barcode',
         'prijs',
