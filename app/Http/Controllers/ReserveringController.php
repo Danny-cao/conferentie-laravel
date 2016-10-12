@@ -11,6 +11,8 @@ use App\ticket;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\DB;
 use App\Events\MessageTicket;
+use PDF;
+use QrCode;
 
 class ReserveringController extends Controller
 {
@@ -85,7 +87,18 @@ class ReserveringController extends Controller
                 
             }
             
-            Event::fire(new MessageTicket($ticketTests,$usertest));
+            $pdf = PDF::loadView('pdf.customer',[
+                'ticketTests' => $ticketTests,
+                'user' => $usertest,
+                ]);
+            
+            foreach ($ticketTests as $test){
+                
+                QrCode::format('png')->size(130)->generate('test',public_path(). '/src/'.$test->id.'.jpg');
+                
+            }
+            
+            Event::fire(new MessageTicket($ticketTests,$usertest,$pdf));
             
             
             return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol Gereserveerd!']);

@@ -15,6 +15,12 @@
     Route::get('/', function() {
       return view('index'); 
     })->name('index');
+    
+    
+    Route::get('/test', function() {
+      return view('test.test'); 
+    })->name('test');
+
 
 
 Route::group(['prefix' => 'agenda'], function() {
@@ -58,10 +64,11 @@ Route::group(['prefix' => 'reservering'], function() {
         'as' => 'saveorder'
         ]);    
 });    
-
-    Route::get('/getPDF','ReserveringController@getPDF');
-
-
+        // PDF test route 
+      Route::get('/getPDF', [
+        'uses' => 'ReserveringController@getPDF',
+        'as' => 'getPDF'
+        ]);    
 
 
 

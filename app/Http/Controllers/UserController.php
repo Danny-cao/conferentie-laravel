@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -29,17 +30,20 @@ class UserController extends Controller
     
     public function getAanvraag()
     {
-        return view('organisator.aanvraag');
+        $aanmeldingen = DB::table('aanmeldings')->get();
+        return view('organisator.aanvraag')->with(['aanmeldingen' => $aanmeldingen]);
     }
     
     public function getConferentie()
     {
-        return view('organisator.conferentie');
+        $conferenties = DB::table('slots')->get();
+        return view('organisator.conferentie')->with(['conferenties' => $conferenties]);
     }
     
     public function getSprekers()
     {
-        return view('organisator.sprekers');
+        $sprekers = DB::table('users')->get();
+        return view('organisator.sprekers')->with(['users' => $users]);
     }
     
     

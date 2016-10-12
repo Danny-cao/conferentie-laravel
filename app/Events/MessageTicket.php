@@ -12,16 +12,18 @@ class MessageTicket extends Event
     use SerializesModels;
     public $reservering = [];
     public $user = [];
+    public $pdf;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct( $reservering,$user)
+    public function __construct( $reservering,$user,$pdf)
     {
         $this->reservering = $reservering;
         $this->user = $user;
+        $this->pdf = $pdf;
     }
 
     /**
