@@ -189,9 +189,22 @@ thead{
     float:left;
     border:1px solid black;
     display:block;
+
+}
+
+.vrijdag-voorkeur {
+    float:left;
+    border:1px solid black;
+    display:block;
 }
 
 .zaterdag {
+    float:left;
+    border:1px solid black;
+    display:block;
+}
+
+.zaterdag-voorkeur {
     float:left;
     border:1px solid black;
     display:block;
@@ -204,9 +217,40 @@ thead{
     margin-bottom: 480px;
 }
 
+.zondag-voorkeur {
+    float:left;
+    border:1px solid black;
+    display:block;
+    margin-bottom: 480px;
+}
+    
+ 
 .aanvragen {
     float:left;
     margin-top: 200px;
 }
 
+.vrijdag tr td {
+    background-color: lightgreen;
+}
+
+.zaterdag tr td {
+    background-color: lightgreen;
+}
+
+.zondag tr td {
+    background-color: lightgreen;
+}
+
+.vrijdag-voorkeur tr td {
+    background-color: lightgrey;
+}
+
+.zaterdag-voorkeur tr td {
+    background-color: lightgrey;
+}
+
+.zondag-voorkeur tr td {
+    background-color: lightgrey;
+}
 

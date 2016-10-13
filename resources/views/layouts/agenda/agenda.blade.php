@@ -5,10 +5,26 @@
 <h1>  Test agenda </h1>
 
 
+
+  <table class ="vrijdag">
+
+                 <tr>
+                    <th>Vrijdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
+                </tr>
+                @foreach($slots as $slot)
+                @if($slot->dag == "zaterdag" && $slot->status == "vrij")
+                <tr>
+                    <td>{{ $slot->begintijd}}</td>
+                    <td>{{ $slot->eindtijd }}</td>
+                    <td>{{ $slot->idZaal}}</td>
+                </tr>
+                @endif
+                @endforeach
+    </table>    
              
              
     <tr>
-             <th>Begintijd</th>
+            <th>Begintijd</th>
 			<th>Eindtijd</th>    		
 			<th>dag</th>
 			<th>status:</th>

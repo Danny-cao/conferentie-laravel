@@ -133,7 +133,7 @@
                 <label for="omschrijving">
                    omschrijving
                 </label>
-                <textarea name="omschrijving" id="omschrijving" rows="10" placeholder="Vul de omschrijving van het onderwerp op">{{ Request::old('omschrijving') }}</textarea>
+                <textarea name="omschrijving" id="omschrijving" rows="10" placeholder="Vul de omschrijving van het onderwerp ">{{ Request::old('omschrijving') }}</textarea>
             </div>
             
               <div class ="input-group">
@@ -149,7 +149,7 @@
                 </label>
             
             
-            <table class ="vrijdag">
+            <table class ="vrijdag-voorkeur">
               
                  <tr>
                     <th>Vrijdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
@@ -167,7 +167,7 @@
                 
             </table>
             
-            <table class ="zaterdag">
+            <table class ="zaterdag-voorkeur">
 
                  <tr>
                     <th>Zaterdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
@@ -185,7 +185,7 @@
                 
             </table>    
                 
-            <table class ="zondag">
+            <table class ="zondag-voorkeur">
                 
                  <tr>
                     <th>Zondag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>

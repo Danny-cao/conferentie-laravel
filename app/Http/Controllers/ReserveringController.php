@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Events\MessageTicket;
 use PDF;
 use QrCode;
+use Illuminate\Support\Facades\Mail;
 
 class ReserveringController extends Controller
 {
@@ -94,12 +95,26 @@ class ReserveringController extends Controller
             
             foreach ($ticketTests as $test){
                 
-                QrCode::format('png')->size(130)->generate('test',public_path(). '/src/'.$test->id.'.jpg');
-                
+                QrCode::format('png')->size(250)->generate('ticketcode: ' .$test->barcode,public_path(). '/src/'.$test->id.'.jpg');
+                QrCode::format('png')->size(250)->generate('maaltijdcode: ' .$test->idMaaltijd,public_path(). '/src/'.$test->idMaaltijd.'.jpg');
             }
             
             Event::fire(new MessageTicket($ticketTests,$usertest,$pdf));
             
+            
+      /*  $pathToFile = $pdf;
+        $user = $usertest;
+        $reservering_ticket = $ticketTests;
+        
+               return $pathToFile->stream();
+               
+         Mail::send('emails.send_ticket_mail', ['reservering_ticket' => $reservering_ticket, 'user' => $user ,'pathToFile' => $pathToFile], function($m) use ($reservering_ticket, $pathToFile, $user){
+           $m->from('info@ict-open.nl',' Conferentie ICT-OPEN');
+           $m->to($user['email'],$user['naam']);
+           $m->subject('ticket Reservering');
+           $m->attachData($pathToFile->output(),'ticket.pdf');
+           
+         });*/
             
             return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol Gereserveerd!']);
     }
