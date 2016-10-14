@@ -95,8 +95,8 @@ class ReserveringController extends Controller
             
             foreach ($ticketTests as $test){
                 
-                QrCode::format('png')->size(250)->generate('ticketcode: ' .$test->barcode,public_path(). '/src/'.$test->id.'.jpg');
-                QrCode::format('png')->size(250)->generate('maaltijdcode: ' .$test->idMaaltijd,public_path(). '/src/'.$test->idMaaltijd.'.jpg');
+                QrCode::format('png')->size(250)->generate('ticketcode: ' .$test->barcode,public_path(). '/src/tickets/'.$test->id.'.jpg');
+                QrCode::format('png')->size(250)->generate('maaltijdcode: ' .$test->idMaaltijd,public_path(). '/src/tickets/'.$test->idMaaltijd.'.jpg');
             }
             
             Event::fire(new MessageTicket($ticketTests,$usertest,$pdf));
