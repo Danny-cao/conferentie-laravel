@@ -14,13 +14,10 @@ class CreateReserveringsTable extends Migration
     {
         Schema::create('reserverings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idUser')->unsigned();
-            $table->foreign('idUser')->references('id')->on('users');
-            $table->integer('idTicket')->unsigned();
-            $table->foreign('idTicket')->references('id')->on('tickets');
+            $table->integer('user')->unsigned();
+            $table->foreign('user')->references('id')->on('users');
             $table->string('betaalmethode');
-            $table->string('barcode');
-            $table->float('prijs');
+            $table->float('totale_prijs');
             $table->timestamps();
         });
     }

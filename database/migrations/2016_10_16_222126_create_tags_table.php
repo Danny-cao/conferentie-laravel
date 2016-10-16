@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContactMessagesTable extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,10 @@ class CreateContactMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('contact_messages', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('sender');
-            $table->string('email');
-            $table->string('subject');
-            $table->string('body');
-            $table->timestamps();
+            $table->string('tag_naam');
+
         });
     }
 
@@ -29,6 +26,6 @@ class CreateContactMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('contact_messages');
+        Schema::drop('tags');
     }
 }

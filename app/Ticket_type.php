@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Agenda extends Model
+class Ticket_type extends Model
 {
-    //
+    public $timestamps = false;
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMaaltijdsTable extends Migration
+class CreateWensensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,9 @@ class CreateMaaltijdsTable extends Migration
      */
     public function up()
     {
-        Schema::create('maaltijds', function (Blueprint $table) {
+        Schema::create('wensens', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('soortmaaltijd');
-            $table->float('prijs');
-            $table->string('beschikbaar');
+            $table->string('wens');
         });
     }
 
@@ -27,6 +25,6 @@ class CreateMaaltijdsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('maaltijds');
+        Schema::drop('wensens');
     }
 }

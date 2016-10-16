@@ -14,14 +14,16 @@ class CreateSlotsTable extends Migration
     {
         Schema::create('slots', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idZaal')->unsigned();
-            $table->foreign('idZaal')->references('id')->on('zaals');
-            $table->integer('idTag')->unsigned();
-            $table->foreign('idTag')->references('id')->on('tags');
+            $table->integer('zaal')->unsigned();
+            $table->foreign('zaal')->references('id')->on('zaals');
+            $table->integer('agenda')->unsigned();
+            $table->foreign('agenda')->references('id')->on('agendas');
+            $table->integer('status')->unsigned();
+            $table->foreign('status')->references('id')->on('statuses');
             $table->string('begintijd');
             $table->string('eindtijd');
-            $table->string('status');
             $table->string('dag');
+            $table->timestamps();
         });
     }
 

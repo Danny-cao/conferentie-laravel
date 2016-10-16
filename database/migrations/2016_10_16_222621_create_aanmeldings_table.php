@@ -14,14 +14,15 @@ class CreateAanmeldingsTable extends Migration
     {
         Schema::create('aanmeldings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idUser')->unsigned();
-            $table->foreign('idUser')->references('id')->on('users');
-            $table->integer('idSlot')->unsigned();
-            $table->foreign('idSlot')->references('id')->on('slots');
-            $table->string('onderwerp');
-            $table->string('omschrijving');
+            $table->integer('user')->unsigned();
+            $table->foreign('user')->references('id')->on('users');
+            $table->integer('slot')->unsigned();
+            $table->foreign('slot')->references('id')->on('slots');
+            $table->text('onderwerp');
+            $table->text('omschrijving');
             $table->string('wensen');
             $table->integer('voorkeur');
+            $table->dateTime('deadline');
             $table->timestamps();
         });
     }

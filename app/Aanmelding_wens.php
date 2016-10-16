@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Agenda extends Model
+class Aanmelding_wens extends Model
 {
     //
 }

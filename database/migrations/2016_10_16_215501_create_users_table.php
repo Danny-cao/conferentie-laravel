@@ -14,6 +14,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('role')->unsigned();
+            $table->foreign('role')->references('id')->on('roles');
             $table->string('naam');
             $table->string('tussenvoegsel');
             $table->string('achternaam');
@@ -23,9 +25,8 @@ class CreateUsersTable extends Migration
             $table->string('woonplaats');
             $table->string('gebruikersnaam');
             $table->string('password');
-            $table->string('role');
-            $table->timestamps();
             $table->rememberToken();
+            $table->timestamps();
         });
     }
 
