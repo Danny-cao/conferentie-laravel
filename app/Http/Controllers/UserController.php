@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\User;
+use App\Aanmelding;
+use App\Slot;
 
 class UserController extends Controller
 {
@@ -43,7 +46,9 @@ class UserController extends Controller
     public function getSprekers()
     {
         $sprekers = DB::table('users')->get();
-        return view('organisator.sprekers')->with(['users' => $users]);
+        $aanmeldingen = DB::table('aanmeldings')->get();
+        $slots = DB::table('slots')->get();
+        return view('organisator.sprekers')->with(['sprekers' => $sprekers , 'aanmeldingen' => $aanmeldingen, 'slots' => $slots]);
     }
     
     
@@ -54,7 +59,7 @@ class UserController extends Controller
             'password' => 'required'
             ]);
             
-        if (!Auth::attempt(['gebruikersnaam' => $request['gebruikersnaam'], 'password' => $request['password']])) {
+        if (!Auth::attempt(['gebruikersnaam' => $request['gebruikersnaam'], 'password' => $request['password'] , 'role' => "organisator" ])) {
             return redirect()->back()->with(['fail' => 'U heeft een verkeerde gebruikersnaam of wachtwoord ingevoerd']);
         }    
         return redirect()->route('user.dashboard');
