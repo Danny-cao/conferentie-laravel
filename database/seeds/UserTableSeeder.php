@@ -22,7 +22,8 @@ class UserTableSeeder extends Seeder
         $user->woonplaats = "Woerden";
         $user->gebruikersnaam = "organisator";
         $user->password = bcrypt("organisator_test");
-        $user->role = "organisator";
+        $user->role = 1;
         $user->save();
+
     }
 }
