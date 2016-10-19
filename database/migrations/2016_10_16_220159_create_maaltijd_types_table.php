@@ -16,7 +16,6 @@ class CreateMaaltijdTypesTable extends Migration
             $table->increments('id');
             $table->string('maaltijd_naam');
             $table->float('prijs');
-            $table->integer('aantal_beschikbaar');
         });
     }
 
