@@ -59,7 +59,7 @@ class UserController extends Controller
             'password' => 'required'
             ]);
             
-        if (!Auth::attempt(['gebruikersnaam' => $request['gebruikersnaam'], 'password' => $request['password'] , 'role' => "organisator" ])) {
+        if (!Auth::attempt(['gebruikersnaam' => $request['gebruikersnaam'], 'password' => $request['password'] , 'role' => 3 ])) {
             return redirect()->back()->with(['fail' => 'U heeft een verkeerde gebruikersnaam of wachtwoord ingevoerd']);
         }    
         return redirect()->route('user.dashboard');

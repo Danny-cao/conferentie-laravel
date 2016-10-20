@@ -12,13 +12,12 @@
 
 <h2> Uw reservering gegevens </h2>
 
-@foreach($reservering_ticket as $reservering)
+
 
 <ul>
-<li>Ticketid: {{ $reservering->idTicket }} </li>
-<li>maaltijd: {{ $reservering->idMaaltijd }} </li>
+<li>User: {{ $reservering_ticket['user'] }} </li>
+<li>Betaalmethode: {{ $reservering_ticket['betaalmethode'] }} </li>
 </ul>
-@endforeach
 
 
 

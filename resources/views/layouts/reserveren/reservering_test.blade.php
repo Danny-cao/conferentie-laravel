@@ -95,9 +95,9 @@ function totalamount()
                 </tr>  
                 @foreach($tickets as $ticket)
                 <tr>
-                    <td>{{ $ticket->soort }}</td>    
+                    <td>{{ $ticket->ticket_naam }}</td>    
                     <td>€{{ $ticket->prijs }}</td>
-                    <td>{{ $ticket->beschikbaar }}</td>
+                    <td>{{ $ticket->aantal_beschikbaar }}</td>
                 </tr>
                 @endforeach
         </table>
@@ -130,7 +130,7 @@ function totalamount()
     			<select name="ticket[]" class="ticket">
     			    <option selected="selected">Kies een Ticket</option>
     			    @foreach($tickets as $ticket)
-    			        <option ticket-prijs="{{ $ticket->prijs }}" value="{{ $ticket->id }}">{{ $ticket->soort }}</option>
+    			        <option ticket-prijs="{{ $ticket->prijs }}" value="{{ $ticket->id }}">{{ $ticket->ticket_naam }}</option>
     			    @endforeach
     			    
     			</select>    
@@ -146,7 +146,7 @@ function totalamount()
     			<option selected="selected">Geen</option>
     			
 			    @foreach($maaltijds as $maaltijd)
-    			        <option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->soortmaaltijd }}</option>
+    			        <option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->maaltijd_naam }}</option>
     			@endforeach
     			
     			    

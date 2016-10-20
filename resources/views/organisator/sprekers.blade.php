@@ -7,7 +7,7 @@
 @foreach($sprekers as $spreker)
 @foreach($aanmeldingen as $aanmelding)
 @foreach($slots as $slot)
-@if( $spreker->id == $aanmelding->idUser && $aanmelding->idSlot == $slot->id)
+@if( $spreker->id == $aanmelding->user && $aanmelding->slot == $slot->id)
 
     {{ $spreker->naam }}
     {{ $aanmelding->onderwerp}}

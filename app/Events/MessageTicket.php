@@ -5,7 +5,6 @@ namespace App\Events;
 use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use App\reservering;
 
 class MessageTicket extends Event
 {
@@ -13,13 +12,14 @@ class MessageTicket extends Event
     public $reservering = [];
     public $user = [];
     public $pdf;
+    
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct( $reservering,$user,$pdf)
+    public function __construct($reservering,$user,$pdf)
     {
         $this->reservering = $reservering;
         $this->user = $user;

@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\User;
-use App\reservering;
-use App\ticket;
+use App\Reservering;
+use App\Ticket;
+use App\Maaltijd;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\DB;
 use App\Events\MessageTicket;
@@ -30,8 +31,8 @@ class ReserveringController extends Controller
      public function getReserveringTest()
     {
         
-        $query = DB::table('tickets')->get();
-        $queryMaaltijd = DB::table('maaltijds')->get();
+        $query = DB::table('ticket_types')->get();
+        $queryMaaltijd = DB::table('maaltijd_types')->get();
 
         return view('layouts.reserveren.reservering_test')->with(['tickets'=>$query, 'maaltijds'=>$queryMaaltijd]);    
         
@@ -65,7 +66,7 @@ class ReserveringController extends Controller
                         'telnummer' => $post['telnummer'],
                         'adres' => $post['adres'],
                         'woonplaats' => $post['woonplaats'],
-                        'role' => "bezoeker",
+                        'role' => 1,
                              
                       );
         
@@ -73,33 +74,66 @@ class ReserveringController extends Controller
         
         $j = DB::table('users')->insertgetId($usertest);
             
+
+        $reserveringtest = array(
+            
+                        'id' => DB::table('reserverings')->max('id') + 1,
+                        'user' => $j,
+                        'betaalmethode' => $post['betaalmethode'],
+                        'totale_prijs' => 50,
+                      );
+                      
+        $h = DB::table('reserverings')->insertgetId($reserveringtest);              
+                      
+                      
+            
             $ticketTests = []; 
             for($i=0;$i < count($post['ticket']); $i++)
             {
                 
-                 $ticketTests[] = reservering::create([
-                             'idUser' => $j,
-                             'idTicket' => $post['ticket'][$i],
-                             'idMaaltijd' => $post['maaltijd'][$i],
-                             'betaalmethode' => $post['betaalmethode'],
-                             'barcode' => $i .$j . $post['ticket'][$i].time(),
-                             'prijs' => $post['amount'][$i],]
+                 $ticketTests[] = Ticket::create([
+                             'ticket_type' => $post['ticket'][$i],
+                             'reservering' => $h,
+                             'ticketcode' => $j . $post['ticket'][$i] . $h,]
                     );
-                
+                    
+                    
             }
             
+            $maaltijdTests = []; 
+            for($i=0;$i < count($post['maaltijd']); $i++)
+            {
+                
+                 $maaltijdTests[] = Maaltijd::create([
+                             'maaltijd_type' => $post['maaltijd'][$i],
+                             'reservering' => $h,
+                             'maaltijdcode' => $j . $post['maaltijd'][$i] . $h,]
+                    );
+                    
+                    
+            }
+            
+            
+                
+            
             $pdf = PDF::loadView('pdf.customer',[
-                'ticketTests' => $ticketTests,
+                'reserveringtest' => $reserveringtest,
                 'user' => $usertest,
+                'tickettest' => $ticketTests,
+                'maaltijdtest' => $maaltijdTests,
                 ]);
             
             foreach ($ticketTests as $test){
                 
-                QrCode::format('png')->size(250)->generate('ticketcode: ' .$test->barcode,public_path(). '/src/tickets/'.$test->id.'.jpg');
-                QrCode::format('png')->size(250)->generate('maaltijdcode: ' .$test->idMaaltijd,public_path(). '/src/tickets/'.$test->idMaaltijd.'.jpg');
+                QrCode::format('png')->size(250)->generate('ticketcode: ' .$test->ticketcode,public_path(). '/src/tickets/'.$test->id.'.jpg');
             }
             
-            Event::fire(new MessageTicket($ticketTests,$usertest,$pdf));
+            foreach ($maaltijdTests as $maaltijd)
+            {
+                QrCode::format('png')->size(250)->generate('maaltijdcode: ' .$maaltijd->maaltijdcode,public_path(). '/src/maaltijden/'.$maaltijd->id.'.jpg');
+            }
+            
+            Event::fire(new MessageTicket($reserveringtest,$usertest,$pdf));
             
             
       /*  $pathToFile = $pdf;
@@ -117,6 +151,7 @@ class ReserveringController extends Controller
          });*/
             
             return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol Gereserveerd!']);
+    
     }
     
 

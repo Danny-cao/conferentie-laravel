@@ -37,22 +37,20 @@ class AanmeldingController extends Controller
         $user->telnummer = $request['telnummer'];
         $user->adres = $request['adres'];
         $user->woonplaats = $request['woonplaats'];
-        $user->role = "Spreker";
+        $user->role = 2;
         $user->save();
         
-        
         $aanmelding = new Aanmelding();
-        $aanmelding->idUser = $user->id; 
-        $aanmelding->idSlot = $request['slot'];
+        $aanmelding->user = $user->id; 
+        $aanmelding->slot = $request['slot'];
         $aanmelding->onderwerp = $request['onderwerp'];
-        $aanmelding->wensen = $request['wensen'];
         $aanmelding->omschrijving = $request['omschrijving'];
         $aanmelding->voorkeur = $request['voorkeur'];
         $aanmelding->save();
         
         DB::table('slots')
             ->where('id', $request['slot'])
-            ->update(['status' => 'onder voorbehoud']);
+            ->update(['status' => 2]);
         
         return redirect()->route('aanmelding.compleet')->with(['success' => 'Aanmelding voltooid , U krijgt binnenkort een emailtje of u de conferentie mag geven']);
     }

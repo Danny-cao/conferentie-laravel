@@ -19,12 +19,12 @@
                     <th>Vrijdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
                 </tr>
                 @foreach($Slots as $slot)
-                @if($slot->dag == "vrijdag" && $slot->status == "vrij")
+                @if($slot->dag == "vrijdag" && $slot->status == 1)
                 <tr>
                     <td><input type="radio" name="slot" value="{{ $slot->id }}"></td> 
                     <td>{{ $slot->begintijd}}</td>
                     <td>{{ $slot->eindtijd }}</td>
-                    <td>{{ $slot->idZaal}}</td>
+                    <td>{{ $slot->zaal}}</td>
                 </tr>
                 @endif
                 @endforeach
@@ -38,12 +38,12 @@
                     <th>Zaterdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
                 </tr>
                 @foreach($Slots as $slot)
-                @if($slot->dag == "zaterdag" && $slot->status == "vrij")
+                @if($slot->dag == "zaterdag" && $slot->status == 1)
                 <tr>
                     <td><input type="radio" name="slot" value="{{ $slot->id }}"></td> 
                     <td>{{ $slot->begintijd}}</td>
                     <td>{{ $slot->eindtijd }}</td>
-                    <td>{{ $slot->idZaal}}</td>
+                    <td>{{ $slot->zaal}}</td>
                 </tr>
                 @endif
                 @endforeach
@@ -55,12 +55,12 @@
                     <th>Zondag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
                 </tr>
                 @foreach($Slots as $slot)
-                @if($slot->dag == "zondag" && $slot->status == "vrij")
+                @if($slot->dag == "zondag" && $slot->status == 1)
                 <tr>
                     <td><input type="radio" name="slot" value="{{ $slot->id }}"></td> 
                     <td>{{ $slot->begintijd}}</td>
                     <td>{{ $slot->eindtijd }}</td>
-                    <td>{{ $slot->idZaal}}</td>
+                    <td>{{ $slot->zaal}}</td>
                 </tr>
                 @endif
                 @endforeach
@@ -155,12 +155,12 @@
                     <th>Vrijdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
                 </tr>
                 @foreach($Slots as $slot)
-                @if($slot->dag == "vrijdag" && $slot->status == "onder voorbehoud")
+                @if($slot->dag == "vrijdag" && $slot->status == 2)
                 <tr>
                     <td><input type="radio" name="voorkeur" value="{{ $slot->id }}"></td> 
                     <td>{{ $slot->begintijd}}</td>
                     <td>{{ $slot->eindtijd }}</td>
-                    <td>{{ $slot->idZaal}}</td>
+                    <td>{{ $slot->zaal}}</td>
                 </tr>
                 @endif
                 @endforeach
@@ -173,12 +173,12 @@
                     <th>Zaterdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
                 </tr>
                 @foreach($Slots as $slot)
-                @if($slot->dag == "zaterdag" && $slot->status == "onder voorbehoud")
+                @if($slot->dag == "zaterdag" && $slot->status == 2)
                 <tr>
                     <td><input type="radio" name="voorkeur" value="{{ $slot->id }}"></td> 
                     <td>{{ $slot->begintijd}}</td>
                     <td>{{ $slot->eindtijd }}</td>
-                    <td>{{ $slot->idZaal}}</td>
+                    <td>{{ $slot->zaal}}</td>
                 </tr>
                 @endif
                 @endforeach
@@ -191,12 +191,12 @@
                     <th>Zondag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
                 </tr>
                 @foreach($Slots as $slot)
-                @if($slot->dag == "zondag" && $slot->status == "onder voorbehoud")
+                @if($slot->dag == "zondag" && $slot->status == 2)
                 <tr>
                     <td><input type="radio" name="voorkeur" value="{{ $slot->id }}"></td> 
                     <td>{{ $slot->begintijd}}</td>
                     <td>{{ $slot->eindtijd }}</td>
-                    <td>{{ $slot->idZaal}}</td>
+                    <td>{{ $slot->zaal}}</td>
                 </tr>
                 @endif
                 @endforeach
