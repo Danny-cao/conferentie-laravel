@@ -1,7 +1,6 @@
 <header>
     <div class="img-banner">
-        <h1>ICT-OPEN IMG</h1>
-        <tite>@yield('title')</tite>
+        <img src="http://conferentie-dannycao.c9users.io/src/banner.jpg"
     </div>
     <nav>
         <ul>
