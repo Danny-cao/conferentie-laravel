@@ -91,6 +91,7 @@ Route::group(['prefix' => 'aanmelding'], function() {
         
         
         
+        
     
     Route::get('/vervolg', function() {
         return view('layouts.aanmelden.vervolg');
@@ -136,6 +137,12 @@ Route::group(['prefix' => 'organisator'], function(){
         'uses' => 'UserController@getAanvraag',
         'as' => 'user.aanvraag'
         ]);
+        
+    Route::post('/organisator/postaanvraag', [
+        'uses' => 'UserController@postAanvraag',
+        'as' => 'postaanvraag'
+        ]);    
+        
     
      Route::get('/organisator/conferentie', [
         'uses' => 'UserController@getConferentie',

@@ -145,7 +145,7 @@ class ReserveringController extends Controller
 				}
 			}
 
-		/*	// mag maximaal 10 tickets bestellen
+			// mag maximaal 10 tickets bestellen
 			if ($last_ticket_id - $max_ticket_id > env('MAX_TICKETS')) {
 				return redirect()
 					->back()->withInput()
@@ -155,7 +155,7 @@ class ReserveringController extends Controller
 				return redirect()
 					->back()->withInput()
 					->withErrors('U mag maximaal 10 maaltijden bestellen');
-			}*/
+			}
 
 			Ticket::insert($tickets);
 			Maaltijd::insert($meals);
@@ -221,6 +221,7 @@ class ReserveringController extends Controller
                     
             }
             
+        //if (isset($post["maaltijd"])) {
             $maaltijdTests = []; 
             for($i=0;$i < count($post['maaltijd']); $i++)
             {
@@ -233,6 +234,7 @@ class ReserveringController extends Controller
                     
                     
             }
+      //  }
             
             
                 

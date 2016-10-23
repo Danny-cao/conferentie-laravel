@@ -140,7 +140,9 @@
                 <label for="wensen">
                     Wensen:
                 </label>
-                 <textarea name="wensen" id="wensen" rows="10" placeholder="Bijvoorbeeld: Beamer of Laptop">{{ Request::old('wensen') }}</textarea>
+                @foreach($Wensen as $wens) 
+                 <input type="checkbox" name="wens[]" value="{{$wens->id }}">{{ $wens->wens }}<br>
+                @endforeach
             </div>
             
             <div class ="input-group">

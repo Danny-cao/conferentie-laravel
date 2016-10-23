@@ -143,7 +143,7 @@ function totalamount()
     			<td>
     			<select name="maaltijd[]" class="maaltijd">
     			
-    			<option selected="selected">Geen</option>
+    			<option selected="selected">geen</option>
     			
 			    @foreach($maaltijds as $maaltijd)
     			        <option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->maaltijd_naam }}</option>

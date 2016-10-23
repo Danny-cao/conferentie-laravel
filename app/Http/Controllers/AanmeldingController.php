@@ -7,6 +7,7 @@ use App\Aanmelding;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Slot;
+use App\Wensen;
 
 use App\Http\Requests;
 
@@ -16,8 +17,9 @@ class AanmeldingController extends Controller
     {
         
         $querySlots = DB::table('slots')->get(); 
+        $queryWens = DB::table('wensens')->get();
         
-        return view('layouts.aanmelden.aanmelding')->with(['Slots'=>$querySlots]);    
+        return view('layouts.aanmelden.aanmelding')->with(['Slots'=>$querySlots, 'Wensen' =>$queryWens]);    
         
     }
     

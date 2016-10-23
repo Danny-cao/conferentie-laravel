@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Aanmelding;
 use App\Slot;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -34,7 +35,34 @@ class UserController extends Controller
     public function getAanvraag()
     {
         $aanmeldingen = DB::table('aanmeldings')->get();
-        return view('organisator.aanvraag')->with(['aanmeldingen' => $aanmeldingen]);
+        $slots = DB::table('slots')->get();
+        $users = DB::table('users')->get();
+        return view('organisator.aanvraag')->with(['aanmeldingen' => $aanmeldingen, 'slots'=> $slots, 'users' => $users]);
+        
+    }
+    
+    public function postAanvraag(Request $request)
+    {
+            DB::table('slots')
+            ->where('id', $request['slotAanvraag'])
+            ->update(['status' => 3]);
+            
+            
+            
+            $email = $request['email'];
+            $gebruiker = $request['naam'];
+            $gekozen_slot = $request['slotAanvraag'];
+            $slots = DB::table('slots')->get();
+            $aanmeldingen = DB::table('aanmeldings')->get();
+               
+         Mail::send('emails.send_result_aanvraag_mail', ['gekozen_slot' => $gekozen_slot, 'slots' => $slots , 'aanmeldingen' => $aanmeldingen,'email' => $email, 'gebruiker' => $gebruiker ], function($m) use ($email, $gebruiker){
+           $m->from('info@ict-open.nl',' Conferentie ICT-OPEN');
+           $m->to($email,$gebruiker);
+           $m->subject('Beoordeling Aanvraag Aanmelding');
+           
+         });
+        
+        return redirect()->route('user.aanvraag')->with(['success' => 'aanvraag geaccepteerd']);
     }
     
     public function getConferentie()
@@ -50,6 +78,7 @@ class UserController extends Controller
         $slots = DB::table('slots')->get();
         return view('organisator.sprekers')->with(['sprekers' => $sprekers , 'aanmeldingen' => $aanmeldingen, 'slots' => $slots]);
     }
+    
     
     
     public function postLogin(Request $request)

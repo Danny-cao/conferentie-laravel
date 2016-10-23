@@ -153,7 +153,14 @@ header nav a:hover {
     list-style: none;
     text-align: center;
     height: 25px;
-    background-color: white;
+    background-color: #4a4a4a;
+}
+
+.footer li a{
+    
+    color:white;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 
@@ -265,3 +272,7 @@ thead{
     background-color: lightgrey;
 }
 
+.Aanvraag {
+    border: 1px solid black;
+    padding: 5px;
+}
