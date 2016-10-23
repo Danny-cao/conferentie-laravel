@@ -12,11 +12,12 @@
                     <th>Vrijdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
                 </tr>
                 @foreach($slots as $slot)
-                @if($slot->dag == "zaterdag" && $slot->status == "vrij")
+                @if($slot->dag == "zaterdag" && $slot->status == 1)
                 <tr>
+                    <td>Onderwerp</td>
                     <td>{{ $slot->begintijd}}</td>
                     <td>{{ $slot->eindtijd }}</td>
-                    <td>{{ $slot->idZaal}}</td>
+                    <td>{{ $slot->zaal}}</td>
                 </tr>
                 @endif
                 @endforeach

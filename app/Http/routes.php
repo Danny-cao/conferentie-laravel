@@ -54,21 +54,17 @@ Route::group(['prefix' => 'reservering'], function() {
         'as' => 'reservering.compleet'
         ]);    
         
-        Route::get('/reservering_test', [
-        'uses' => 'ReserveringController@getReserveringTest',
-        'as' => 'reservering.test'
-        ]);      
-        
-        Route::post('/postReserveringtest', [
-        'uses' => 'ReserveringController@postReserveringTest',
-        'as' => 'saveorder'
-        ]);    
 });    
         // PDF test route 
-      Route::get('/getPDF', [
-        'uses' => 'ReserveringController@getPDF',
-        'as' => 'getPDF'
+      Route::get('/test', [
+        'uses' => 'ReserveringController@getTest',
+        'as' => 'getTest'
         ]);    
+        
+      Route::post('/postTest', [
+        'uses' => 'ReserveringController@postTest',
+        'as' => 'postTest'
+        ]); 
 
 
 

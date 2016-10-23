@@ -14,13 +14,17 @@ use Illuminate\Support\Facades\DB;
 use App\Events\MessageTicket;
 use PDF;
 use QrCode;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 
 class ReserveringController extends Controller
 {
     public function getReserveringIndex()
     {
-        return view('layouts.reserveren.reservering');    
+        $query = DB::table('ticket_types')->get();
+        $queryMaaltijd = DB::table('maaltijd_types')->get();
+
+        return view('layouts.reserveren.reservering')->with(['tickets'=>$query, 'maaltijds'=>$queryMaaltijd]);     
     }
     
     public function getReserveringCompleet()
@@ -28,24 +32,141 @@ class ReserveringController extends Controller
         return view('layouts.reserveren.reservering_compleet');
     }
     
-     public function getReserveringTest()
+    
+    public function getTest() 
     {
+        $query1 = DB::table('ticket_types')->get();
+        $queryMaaltijd1 = DB::table('maaltijd_types')->get();
         
-        $query = DB::table('ticket_types')->get();
-        $queryMaaltijd = DB::table('maaltijd_types')->get();
+        return view('test.test')->with(['ticket_types'=>$query1, 'maaltijd_types'=>$queryMaaltijd1]);
+        
+    }
+    
+    public function postTest(Request $request)
+    {
+        $data = $request->all();
 
-        return view('layouts.reserveren.reservering_test')->with(['tickets'=>$query, 'maaltijds'=>$queryMaaltijd]);    
-        
+		$validator = \Validator::make($data, [
+			'naam' => 'required',
+			'email' => 'required|email',
+			'payment' => 'required',
+		]);
+
+		if ($validator->fails()) {
+			$this->throwValidationException($request, $validator);
+		}
+
+		$ticket_types = \DB::table('ticket_types')->get();
+
+		$user = null;
+		$reservation = null;
+		// alleen verder kijken als er minimaal 1 ticket gekocht wordt
+		// dan pas is reservatie niet null
+
+		$tickets = [];
+		$max_ticket_id = Ticket::max('id');
+		$last_ticket_id = $max_ticket_id;
+
+		//todo: kijken naar ticket priorities, dus als er al 250? records zijn
+
+		$now = Carbon::now(config('app.timezone'))->toDateTimeString();
+
+		foreach ($ticket_types as $ticket_type) {
+
+			$ticket_type_count = $request->get('ticket-' . $ticket_type->id);
+
+			if (intval($ticket_type_count) > 0) {
+
+				if ($reservation == null) {
+
+					// insert bezoeker / reservatie
+					// wordt maar 1 keer aangeroepen
+					$user = User::create([
+					    'role' => 1,
+						'email' => $request->get('email'),
+						'naam' => $request->get('naam'),
+					]);
+					
+					
+
+					$reservation = Reservering::create([
+						'user' => $user->id,
+						'betaalmethode' => $request->get('payment'),
+					]);
+				}
+
+				for ($i = 0; $i < $ticket_type_count; $i++) {
+
+					$last_ticket_id++;
+
+					$tickets[] = [
+						'id' => $last_ticket_id,
+						'reservering' => $reservation->id,
+						'ticket_type' => $ticket_type->id,
+						'ticketcode' => uniqid($reservation->id . $ticket_type->id . $last_ticket_id),
+						'created_at' => $now,
+						'updated_at' => $now,
+					];
+					
+				}
+
+			}
+		}
+
+		$meals = [];
+		$max_meal_id = Maaltijd::max('id');
+		$last_meal_id = $max_meal_id;
+
+		if ($reservation != null) {
+
+			$meal_types = \DB::table('maaltijd_types')->get();
+
+			foreach ($meal_types as $meal_type) {
+
+				$meal_type_count = $request->get('maaltijd-' . $meal_type->id);
+
+				if (intval($meal_type_count) > 0) {
+
+					for ($i = 0; $i < $meal_type_count; $i++) {
+
+						$last_meal_id++;
+
+						$meals[] = [
+							'id' => $last_meal_id,
+							'reservering' => $reservation->id,
+							'maaltijd_type' => $meal_type->id,
+							'maaltijdcode' => uniqid($reservation->id . $meal_type->id . $last_meal_id),
+							'created_at' => $now,
+							'updated_at' => $now,
+						];
+
+					}
+
+				}
+			}
+
+		/*	// mag maximaal 10 tickets bestellen
+			if ($last_ticket_id - $max_ticket_id > env('MAX_TICKETS')) {
+				return redirect()
+					->back()->withInput()
+					->withErrors('U mag maximaal 10 tickets bestellen');
+			}
+			if ($last_meal_id - $max_meal_id > env('MAX_MEALS')) {
+				return redirect()
+					->back()->withInput()
+					->withErrors('U mag maximaal 10 maaltijden bestellen');
+			}*/
+
+			Ticket::insert($tickets);
+			Maaltijd::insert($meals);
+			
+			
     }
     
-    public function getPDF() 
-    {
-        $pdf = PDF::loadView('pdf.customer');
-        return $pdf->download('customer.pdf');
-        
+    
     }
     
-    public function postReserveringTest(Request $request)
+    public function postReservering(Request $request)
     {
        
         $this->validate($request, [
@@ -155,41 +276,6 @@ class ReserveringController extends Controller
     }
     
 
-    
-    public function postReservering(Request $request)
-    { 
-        
-        $this->validate($request, [
-            
-            'ticket'                => 'required|',
-            'naam'                  => 'required|max:30',
-            'achternaam'            => 'required|max:30',
-            'email'                 => 'required|email'
-        ]
-    );
-        
-        $user = new User();
-        $user->id = DB::table('users')->max('id') + 1;
-        $user->naam = $request['naam'];
-        $user->tussenvoegsel = $request['tussenvoegsel'];
-        $user->achternaam = $request['achternaam'];
-        $user->email = $request['email'];
-        $user->telnummer = $request['telnummer'];
-        $user->adres = $request['adres'];
-        $user->woonplaats = $request['woonplaats'];
-        $user->role = "bezoeker";
-        $user->save();
-        
-        $reservering = new Reservering();
-        $reservering->id = DB::table('reserverings')->max('id') + 1;
-        $reservering->idticket = $request['ticket'];
-        $reservering->idUser = $user->id;
-        $reservering->betaalmethode = $request['betaalmethode'];
-        $reservering->barcode = $reservering->id . $reservering->idticket . $user->id;
-        $reservering->prijs = DB::table('tickets')->where('id', $reservering->idticket )->value('prijs');
-        $reservering->save();
-        return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol Gereserveerd!']);
-    }
     
     public function testDBQuery()
     {

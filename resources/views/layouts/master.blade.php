@@ -17,6 +17,15 @@
         <div class="main">
            
             @yield('content')
+            
+                    <!-- Scripts -->
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bower_components/moment/moment.js"></script>
+<script src="/bower_components/moment/locale/nl.js"></script>
+<script src="/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
+
+@yield('scripts')
         </div>
         @include('includes.footer')
         

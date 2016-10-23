@@ -128,7 +128,7 @@ header nav a:hover {
 }
 
 .img-banner img {
-    width:1890px;
+    width:100%;
     height:171px;
     display:flex;
 }
