@@ -24,7 +24,8 @@ class ReserveringController extends Controller
         $query = DB::table('ticket_types')->get();
         $queryMaaltijd = DB::table('maaltijd_types')->get();
 
-        return view('layouts.reserveren.reservering')->with(['tickets'=>$query, 'maaltijds'=>$queryMaaltijd]);     
+        return view('layouts.reserveren.reservering')->with(['tickets'=>$query, 'maaltijden'=>$queryMaaltijd]);     
+       /* return view('layouts.reserveren.reservering')->with(['tickets'=>$query, 'maaltijds'=>$queryMaaltijd]);     */
     }
     
     public function getReserveringCompleet()
@@ -116,6 +117,7 @@ class ReserveringController extends Controller
 		$meals = [];
 		$max_meal_id = Maaltijd::max('id');
 		$last_meal_id = $max_meal_id;
+		
 
 		if ($reservation != null) {
 
@@ -221,22 +223,40 @@ class ReserveringController extends Controller
                     
             }
             
-        //if (isset($post["maaltijd"])) {
-            $maaltijdTests = []; 
-            for($i=0;$i < count($post['maaltijd']); $i++)
-            {
-                
-                 $maaltijdTests[] = Maaltijd::create([
-                             'maaltijd_type' => $post['maaltijd'][$i],
-                             'reservering' => $h,
-                             'maaltijdcode' => $j . $post['maaltijd'][$i] . $h,]
-                    );
-                    
-                    
-            }
-      //  }
+/*testing*/
+        $maaltijdTests = [];
+		$max_meal_id = Maaltijd::max('id');
+		$last_meal_id = $max_meal_id;
+        $dateReservering = Carbon::now(config('app.timezone'))->toDateTimeString();
+
+			$meal_types = \DB::table('maaltijd_types')->get();
+
+			foreach ($meal_types as $meal_type) {
+
+				$meal_type_count = $request->get('maaltijd-' . $meal_type->id);
+
+				if (intval($meal_type_count) > 0) {
+
+					for ($i = 0; $i < $meal_type_count; $i++) {
+
+						$last_meal_id++;
+
+						$maaltijdTests[] = Maaltijd::create([
+							'id' => $last_meal_id,
+							'reservering' => $h,
+							'maaltijd_type' => $meal_type->id,
+							'maaltijdcode' =>  uniqid($h . $meal_type->id . $last_meal_id),
+							'created_at' => $dateReservering,
+						]);
+
+					}
+
+				}
+			}
+    
+        
             
-            
+/*testing*/            
                 
             
             $pdf = PDF::loadView('pdf.customer',[
