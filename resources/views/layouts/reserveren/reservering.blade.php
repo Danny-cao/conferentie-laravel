@@ -6,7 +6,7 @@
     $(function(){
         /* ************************ Algemene functies ************************ */
         /* Verander functie voor change Values van totale prijzen */
-        function changeValues() {
+        function veranderPrijs() {
             var sumMeals = 0;
             $('.priceMaaltijd').each(function(i, obj) {
                 sumMeals += $(this).val()*1;
@@ -31,14 +31,14 @@
         		'<td><a href="#" class="btn btn-danger delete">verwijder</a></td></tr>';
             $('.body_ticket').append(newTicketRow);	
             
-            changeValues();
+            veranderPrijs();
         });
     
         /* Delete selected row ticket */
         $(".body_ticket").delegate(".delete", "click", function() {
             $(this).parent().parent().remove();
             
-            changeValues();
+            veranderPrijs();
         });
         
         /* Change value depending on type Ticket */
@@ -46,7 +46,7 @@
             var newTicketRow = $(this).parent().parent();
             var prijs = newTicketRow.find(".ticket option:selected").attr("ticket-prijs");
             newTicketRow.find(".price").val(prijs);
-            changeValues();
+            veranderPrijs();
         });
         
         
@@ -56,47 +56,30 @@
 
 <section class="reservering"> 
     <h1> Tickets Reserveren </h1>
-    <div class="col-md-6">
-        <table>
-            <tr><th>Ticket</th>         <th>Prijs in €</th> <th>Beschikbaar</th></tr>
-            <tr><td>Vrijdag</td>        <td>€45</td>        <td>250</td></tr>
-            <tr><td>Zaterdag</td>       <td>€60</td>        <td>250</td></tr>
-            <tr><td>Zondag</td>         <td>€30</td>        <td>250</td></tr>
-            <tr><td>Passe-partout</td>  <td>€100</td></tr>
-            <tr><td>weekend</td>        <td>€80</td></tr>
-        </table>
-    </div>
-    <div class="col-md-6">
+    <div class="table table-bordered table-hover">
         <table>
             <tr>
-                <th>Maaltijd</th>
+                <th>Ticket</th>
                 <th>Prijs</th>
-                <th>Dagen</th>
-                <th>Tijdstip</th>
-            </tr>
+                <th>aantal beschikbaar</th>
+            </tr>    
+            @foreach($tickets as $ticket)
             <tr>
-                <td>Lunch</td>
-                <td>€20</td>
-                <td>Alle dagen</td>
-                <td>12:00 - 13:30</td>
+             <td>{{$ticket->ticket_naam }}</td>
+             <td>{{$ticket->prijs }}</td>
+             <td>{{$ticket->aantal_beschikbaar }}</td>
             </tr>
-            <tr>
-                <td>Diner</td>
-                <td>€30</td>
-                <td>Weekend</td>
-                <td>17:30 - 20:00</td>
-            </tr>
+            @endforeach
         </table>
     </div>
     <br>
-    <div class="col-md-12">
+    <div class="input-group">
         @include('includes.info-box')
         
         <form  method="post" action='{{ route('postreservering') }}' id='reserveren'>
             
             <!-- ******* Ticket ******* -->
             <div class="col-md-6">
-                <button type="button" class="btn addticket" value="+">Ticket Toevoegen</button><br>
                 <table>
                     <thead>
                         <tr>
@@ -122,6 +105,7 @@
                                 <input type="text" name="price[]" class="price" value="45" readonly>
                             </td>
                         </tr>
+                        <button type="button" class="btn addticket" value="+">Ticket Toevoegen</button><br>
                     </tbody>
                 </table>
             </div>
@@ -155,15 +139,15 @@
                 <center>
                     <table>
                         <tr>
-                            <td><label for="totaal">Totaal ticket: </label></td>
-                            <td><input type="text" id="totaalTicket" name="totaalTicket" class="totaalTicket" value="45" readonly></td>
+                         <!--   <td><label for="totaal">Totaal ticket: </label></td>-->
+                            <td><input type="hidden" id="totaalTicket" name="totaalTicket" class="totaalTicket" value="45" readonly></td>
                         </tr>
                         <tr>
-                            <td><label for="totaal">Totaal maaltijd: </label></td>
-                            <td><input type="text" id="totaalMaaltijd" name="totaalMaaltijd" class="totaalMaaltijd" value="0" readonly></td>
+                         <!--   <td><label for="totaal">Totaal maaltijd: </label></td>-->
+                            <td><input type="hidden" id="totaalMaaltijd" name="totaalMaaltijd" class="totaalMaaltijd" value="0" readonly></td>
                         </tr>
                         <tr>
-                            <td><label for="totaal">Totaal reservering: </label></td>
+                            <td><label for="totaal">Totaal prijs: </label></td>
                             <td><input type="text" id="totaalReservering" name="totaalReservering" class="totaalReservering" value="45" readonly></td>
                         </tr>
                     </table>
@@ -172,11 +156,11 @@
             
             <p>Totale prijs: &euro;&nbsp;<span id="total-price">0</span></p>
             
-            <div class ="input-group col-md-12">
+            <div class ="input-group">
                 <table>
                     <tr>
                         <td><label for="naam">Voornaam: </label></td>
-                        <td><input type="text" name="naam" id="naam" placeholder="je naam"/></td>
+                        <td><input type="text" name="naam" id="naam" placeholder="naam"/></td>
                     </tr>
                     <tr>
                         <td><label for="tussenvoegsel">Tussenvoegsel: </label></td>
@@ -188,7 +172,7 @@
                     </tr>
                     <tr>
                         <td><label for="email">Email: </label></td>
-                        <td><input type="text" name="email" id="email" placeholder="email"/></td>
+                        <td><input type="text" name="email" id="email" placeholder="Danny@danny.nl"/></td>
                     </tr>
                     <tr>
                         <td><label for="telnummer">Telnummer: </label></td>
@@ -207,8 +191,6 @@
                         <td>
                             <select name="betaalmethode" id="betaalmethode">
                                 <option value="IDeal">IDeal</option>
-                                <option value="PayPal">PayPal</option>
-                                <option value="Creditcard">Creditcard</option>
                             </select>
                         </td>
                     </tr>

@@ -26,7 +26,7 @@
 Route::group(['prefix' => 'agenda'], function() {
 
     Route::get('/', [
-        'uses' => 'ReserveringController@testDBQuery',
+        'uses' => 'AgendaController@getAgenda',
         'as' => 'agenda'
         ]);
 
@@ -111,9 +111,6 @@ Route::group(['prefix' => 'organisator'], function(){
     
 
 });
-
-
-
 
     Route::get('/organisator/login', [
         'uses' => 'UserController@getLogin',

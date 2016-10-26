@@ -7,54 +7,85 @@
 
 
 
-  <table class ="vrijdag">
-
+<table class ="vrijdag">
+                <tr>
+                  <th>vrijdag</th>
+                </tr>
                  <tr>
-                    <th>Vrijdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
+                    <th>Begintijd</th><th>Eindtijd</th><th>Zaal</th><th>Status</th><th></th><th>Onderwerp</th>
                 </tr>
                 @foreach($slots as $slot)
-                @if($slot->dag == "vrijdag")
+                @foreach($statuses as $status)
+                @if($slot->dag == "vrijdag" && $slot->status == $status->id )
                 <tr>
-                    <td>Onderwerp</td>
                     <td>{{ $slot->begintijd}}</td>
                     <td>{{ $slot->eindtijd }}</td>
                     <td>{{ $slot->zaal}}</td>
-                </tr>
+                    <td>{{ $status->status}}<td>
+                @foreach($aanmeldingen as $aanmelding)
+                @if($status->status == "bezet" && $slot->id == $aanmelding->slot)
+                    <td> {{ $aanmelding->onderwerp }}</td>
+                @endif    
+                @endforeach
                 @endif
+                @endforeach
                 @endforeach
     </table>    
     <table class ="zaterdag">
-
                  <tr>
-                    <th>zaterdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
+                   <th>zaterdag</th>
+                </tr>
+                 <tr>
+                <th>Begintijd</th><th>Eindtijd</th><th>Zaal</th><th>status</th><th></th><th>Onderwerp</th>
                 </tr>
                 @foreach($slots as $slot)
-                @if($slot->dag == "zaterdag")
+                @foreach($statuses as $status)
+                @if($slot->dag == "zaterdag" && $slot->status == $status->id)
                 <tr>
-                    <td>Onderwerp</td>
                     <td>{{ $slot->begintijd}}</td>
                     <td>{{ $slot->eindtijd }}</td>
                     <td>{{ $slot->zaal}}</td>
+                    <td>{{ $status->status}}<td>
+                @foreach($aanmeldingen as $aanmelding)
+                @if($status->status == "bezet" && $slot->id == $aanmelding->slot)
+                    <td> {{ $aanmelding->onderwerp }}</td>
+                @endif    
+                @endforeach        
                 </tr>
                 @endif
                 @endforeach
+                @endforeach
     </table>    
      <table class ="zondag">
-
+                <tr>
+                   <th>Zondag</th>
+                </tr>
                  <tr>
-                    <th>zaterdag</th><th>Begintijd</th><th>Eindtijd</th><th>Zaal</th>
+                     
+                  <th>Begintijd</th><th>Eindtijd</th><th>Zaal</th><th>status</th><th></th><th></th><th>Onderwerp</th>
                 </tr>
                 @foreach($slots as $slot)
-                @if($slot->dag == "zondag")
+                @foreach($statuses as $status)
+                @if($slot->dag == "zondag" && $slot->status == $status->id)
                 <tr>
                     <td>Onderwerp</td>
                     <td>{{ $slot->begintijd}}</td>
                     <td>{{ $slot->eindtijd }}</td>
                     <td>{{ $slot->zaal}}</td>
+                    <td>{{ $status->status}}<td>
+                @foreach($aanmeldingen as $aanmelding)
+                @if($status->status == "bezet" && $slot->id == $aanmelding->slot)
+                    <td> {{ $aanmelding->onderwerp }}</td>
+                @endif    
+                @endforeach                
                 </tr>
                 @endif
+                @endforeach
                 @endforeach
     </table>    
              
 </section>
+
+
+
 @endsection

@@ -11,6 +11,7 @@ use App\User;
 use App\Aanmelding;
 use App\Slot;
 use Illuminate\Support\Facades\Mail;
+use App\Slot_tag;
 
 class UserController extends Controller
 {
@@ -47,11 +48,14 @@ class UserController extends Controller
             ->where('id', $request['slotAanvraag'])
             ->update(['status' => 3]);
             
-            	$tag = Slot_tag::create([
-					    'role' => 1,
-						'email' => $request->get('email'),
+            
+            
+            
+         /*   $tag = Slot_tag::create([
+					    'slot' => $request['slotAanvraag'],
+					    'email' => $request->get('email'),
 						'naam' => $request->get('naam'),
-					]);
+					]);*/
             
             
             

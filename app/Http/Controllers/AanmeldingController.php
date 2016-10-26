@@ -19,6 +19,7 @@ class AanmeldingController extends Controller
         $querySlots = DB::table('slots')->get(); 
         $queryWens = DB::table('wensens')->get();
         
+        
         return view('layouts.aanmelden.aanmelding')->with(['Slots'=>$querySlots, 'Wensen' =>$queryWens]);    
         
     }
@@ -49,6 +50,9 @@ class AanmeldingController extends Controller
         $aanmelding->omschrijving = $request['omschrijving'];
         $aanmelding->voorkeur = $request['voorkeur'];
         $aanmelding->save();
+        
+        
+        //TODO Wensen table
         
         DB::table('slots')
             ->where('id', $request['slot'])

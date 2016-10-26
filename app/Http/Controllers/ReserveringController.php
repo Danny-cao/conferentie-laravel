@@ -213,7 +213,20 @@ class ReserveringController extends Controller
             $ticketTests = []; 
             for($i=0;$i < count($post['ticket']); $i++)
             {
-                
+            	
+            	
+            DB::table('ticket_types')
+            ->where('id', $post['ticket'][$i])
+            ->decrement('aantal_beschikbaar');
+            
+            /*
+            $checkAantalbeschikbaar = DB::table('ticket_types')->get('aantal_beschikbaar');
+            
+            if($checkAantalbeschikbaar < 0 ) {
+            	
+            } */
+            
+            
                  $ticketTests[] = Ticket::create([
                              'ticket_type' => $post['ticket'][$i],
                              'reservering' => $h,
@@ -257,13 +270,16 @@ class ReserveringController extends Controller
         
             
 /*testing*/            
-                
+            $maaltijdTypes = DB::table('maaltijd_types')->get();
+            $ticketTypes = DB::table('ticket_types')->get();
             
             $pdf = PDF::loadView('pdf.customer',[
                 'reserveringtest' => $reserveringtest,
                 'user' => $usertest,
                 'tickettest' => $ticketTests,
                 'maaltijdtest' => $maaltijdTests,
+                'ticketTypes' => $ticketTypes,
+                'maaltijdTypes' => $maaltijdTypes,
                 ]);
             
             foreach ($ticketTests as $test){
@@ -297,12 +313,4 @@ class ReserveringController extends Controller
     
     }
     
-
-    
-    public function testDBQuery()
-    {
-        $slots = DB::table('slots')->get();
-        
-        return view('layouts.agenda.agenda', ['slots' =>$slots]);
-    }
 }
