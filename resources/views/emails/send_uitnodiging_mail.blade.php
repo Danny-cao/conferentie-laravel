@@ -259,6 +259,8 @@
                       <td>
                         <p>Hi there,</p>
                         <p>We just noticed you bought a Ticket for Saturday you a hereby invited to the coolboyz club.</p>
+                        <p>You are allowed to buy <b>{{ $magkopen }}</b> Meeting Tickets.
+                        <p>To be able to buy a Meeting Ticket use your Special Code : <b>{{ $bijeenkomsts }}</b> </p>
                         <p>Click on the button to go the the limited edition Meeting.</p>
                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>

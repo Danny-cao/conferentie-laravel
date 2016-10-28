@@ -30,6 +30,7 @@ class SendTicket
         $reservering_ticket = $event->reservering;
         $user = $event->user;
         $pathToFile =  $event->pdf;
+        //$beschikbaar = $event->magkopen;
         //dd($pathToFile);
         
         

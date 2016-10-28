@@ -21,6 +21,15 @@
 
 
 
+
+
+<ul>
+<li>User: {{ $reservering_ticket['user'] }} </li>
+<li>Betaalmethode: {{ $reservering_ticket['betaalmethode'] }} </li>
+</ul>
+
+
+
 <p> Uw ticket zit in de bijlage</p>
 <!doctype html>
 <html>

@@ -40,6 +40,21 @@ class ReserveringController extends Controller
         
         $post = $request->all();
         
+        $check_aantal = DB::table('ticket_types')->where('id','6')->value('aantal_beschikbaar');
+        
+        
+        $reservecode = DB::table('bijeenkomsts')->value('reserveringscode', $post['reserveringscode']);
+        
+        
+        $magkopen2 = DB::table('bijeenkomsts')->where('reserveringscode', $post['reserveringscode'])->value('aantal');
+        
+        if($check_aantal < $post['counter'] || $post['counter'] > $magkopen2) 
+        {
+        return redirect()->route('bijeenkomst')->with(['fail' => 'U kunt alleen maar  ' . $magkopen2 .' tickets bestellen 
+        of uw reserveringscode klopt niet']);
+        }
+        else{
+        
          $usertest = array(
             
                         'id' => DB::table('users')->max('id') + 1,
@@ -119,7 +134,7 @@ class ReserveringController extends Controller
         De ticket(s) zijn verstuurd naar de opgegeven email :'. '  ' . $usertest['email']]);
     
     
-        
+        }
     }
     
     public function getReserveringCompleet()
@@ -272,6 +287,9 @@ class ReserveringController extends Controller
                 
             ]);
          $post = $request->all();    
+         
+         
+     
         
         $usertest = array(
             
@@ -326,6 +344,9 @@ class ReserveringController extends Controller
                              'reservering' => $h,
                              'ticketcode' => $j . $post['ticket'][$i] . $h,]
                     );
+                    
+            
+                    
                     
                     
             }
@@ -423,14 +444,35 @@ class ReserveringController extends Controller
          foreach($ticketTests as $testing)
          {
              
-         
-         
-         
          if ($testing->ticket_type == 2){
              
              $user = $usertest;
+             $zaterdagticketid = DB::table('ticket_types')->where('ticket_naam' , 'zaterdag')->value('id');
              
-         Mail::send('emails.send_uitnodiging_mail', ['user' => $user], function($m) use ($user){
+             
+            $magkopen = 0;
+        
+            foreach($post['ticket'] as $zaterdagticket => $zaterdagticketid )
+            {
+                 $magkopen++;
+            }
+            
+         
+        
+        
+        
+        $bijeenkomstarray = array(
+                        'reserveringscode' => DB::table('bijeenkomsts')->max('id') + 1 . $h . $j ,
+                        'aantal' => $magkopen,
+            );     
+            
+            
+        $insertBijeenkomst = DB::table('bijeenkomsts')->insertgetId($bijeenkomstarray);       
+        
+            
+             
+             
+         Mail::send('emails.send_uitnodiging_mail', ['user' => $user, 'magkopen' => $magkopen, 'bijeenkomsts' => $bijeenkomstarray['reserveringscode'] ], function($m) use ($user){
            $m->from('info@ict-open.nl',' Conferentie ICT-OPEN');
            $m->to($user['email'],$user['naam']);
            $m->subject('Uitnodiging');

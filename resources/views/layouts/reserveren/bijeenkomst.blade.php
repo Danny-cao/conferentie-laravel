@@ -12,8 +12,8 @@
                 sumTickets += $(this).val()*1;
             });
             
-            var ticketCounter;
-               $('.onecount').each(function(i, obj) {
+            var ticketCounter = 0;
+            $('.onecount').each(function(i, obj) {
                 ticketCounter += $(this).val()*1;
             });
             
@@ -31,7 +31,7 @@
             var newTicketRow = '<tr><th class="no">'+ n +'</th>' +
                 '<td><select name="ticket[]" class="ticket">'+ ticket +'</select></td>' + 
         		'<td><input type="text" name="price[]" class="price" value="25" readonly></td>' + 
-        		'<td><input type="text" name="onecount[]" class="onecount" value="1" readonly></td>' + 
+        		'<td><input type="hidden" name="onecount[]" class="onecount" value="1" readonly></td>' + 
         		'<td><a href="#" class="btn btn-danger delete">verwijder</a></td></tr>';
             $('.body_ticket').append(newTicketRow);	
             
@@ -50,7 +50,9 @@
         $('.body_ticket').delegate(".ticket", "change", function() {
             var newTicketRow = $(this).parent().parent();
             var prijs = newTicketRow.find(".ticket option:selected").attr("ticket-prijs");
+            var onecount = newTicketRow.find(".onecount").attr("value");
             newTicketRow.find(".price").val(prijs);
+            newTicketRow.find(".onecount").val(onecount);
             veranderPrijs();
         });
         
@@ -134,7 +136,7 @@
                                 <input type="text" name="price[]" class="price" value="25" readonly>
                             </td>
                             <td>
-                                <input type="text" name="onecount[]" class="onecount" value="1" readonly>
+                                <input type="hidden" name="onecount[]" class="onecount" value="1" readonly>
                             </td>
                         </tr>
                         <button type="button" class="btn addticket" value="+">Ticket Toevoegen</button><br>
@@ -153,8 +155,8 @@
                         </tr>
                         
                          <tr>
-                           <td><label for="counter">counter: </label></td>
-                            <td><input type="text" id="counter" name="counter" class="counter" value="1" readonly></td>
+                           
+                            <td><input type="hidden" id="counter" name="counter" class="counter" value="1" readonly></td>
                         </tr>
                     
                        <!-- <tr>
@@ -168,6 +170,10 @@
             
             <div class ="input-group">
                 <table>
+                    <tr>
+                        <td><label for="naam">Reserveringscode: </label></td>
+                        <td><input type="text" name="reserveringscode" id="reserveringscode" placeholder="reserveringscode"/></td>
+                    </tr>
                     <tr>
                         <td><label for="naam">Voornaam: </label></td>
                         <td><input type="text" name="naam" id="naam" placeholder="naam"/></td>
