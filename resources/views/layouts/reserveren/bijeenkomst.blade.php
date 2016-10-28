@@ -7,17 +7,20 @@
         /* ************************ Algemene functies ************************ */
         /* Verander functie voor change Values van totale prijzen */
         function veranderPrijs() {
-            var sumMeals = 0;
-            $('.priceMaaltijd').each(function(i, obj) {
-                sumMeals += $(this).val()*1;
-            });
             var sumTickets = 0;
             $('.price').each(function(i, obj) {
                 sumTickets += $(this).val()*1;
             });
+            
+            var ticketCounter;
+               $('.onecount').each(function(i, obj) {
+                ticketCounter += $(this).val()*1;
+            });
+            
             document.getElementById("totaalTicket").value = sumTickets;
-            document.getElementById("totaalMaaltijd").value = sumMeals;
-            document.getElementById("totaalReservering").value = sumMeals + sumTickets;
+            //document.getElementById("totaalMaaltijd").value = sumMeals;
+            document.getElementById("counter").value = ticketCounter;
+            //document.getElementById("totaalReservering").value = sumMeals + sumTickets;
         }
         /* ************************ Ticket ************************ */
         /* Add row ticket */
@@ -27,12 +30,14 @@
             
             var newTicketRow = '<tr><th class="no">'+ n +'</th>' +
                 '<td><select name="ticket[]" class="ticket">'+ ticket +'</select></td>' + 
-        		'<td><input type="text" name="price[]" class="price" value="45" readonly></td>' + 
+        		'<td><input type="text" name="price[]" class="price" value="25" readonly></td>' + 
+        		'<td><input type="text" name="onecount[]" class="onecount" value="1" readonly></td>' + 
         		'<td><a href="#" class="btn btn-danger delete">verwijder</a></td></tr>';
             $('.body_ticket').append(newTicketRow);	
             
             veranderPrijs();
         });
+    
     
         /* Delete selected row ticket */
         $(".body_ticket").delegate(".delete", "click", function() {
@@ -49,46 +54,32 @@
             veranderPrijs();
         });
         
+        
              /* ************************ Maaltijd ************************ */
         /* Add row maaltijd */
-        $('.addmaaltijd').click(function(){
-            var maaltijd = $('.maaltijd').html();
-            var n = ($('.body_maaltijd tr').length-0)+1;
-            var newTicketRow = '<tr><th class="no">'+ n +'</th>' +
-        		'<td><select name="maaltijd[]" class="maaltijd">@foreach($maaltijden as $maaltijd)' + 
-        		'<option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->maaltijd_naam }}</option>@endforeach</select></td>' + 
-            	'<td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>' + 
-        		'<td><a href="#" class="btn btn-danger delete">verwijder</a></td></tr>';
-            $('.body_maaltijd').append(newTicketRow);
-            
-            veranderPrijs();
-        });
-        
-        /* Delete selected row maaltijd */
-        $(".body_maaltijd").delegate(".delete", "click", function() {
-            $(this).parent().parent().remove();
-            
-            veranderPrijs();
-        });
-        
-        /* Change value depending on type Maaltijd */
-        $('.body_maaltijd').delegate(".maaltijd", "change", function() {
-            var newTicketRow = $(this).parent().parent();
-            var prijs = newTicketRow.find(".maaltijd option:selected").attr("maaltijd-prijs");
-            
-            newTicketRow.find(".priceMaaltijd").val(prijs);
-            
-            veranderPrijs();
-        });
-        
+     
         
     });
     
 </script>
 
 <section class="reservering"> 
-    <h1> Tickets Reserveren </h1>
+    <h1>Bijeenkomst Zaterdag</h1>
     <div class="table table-bordered table-hover">
+         <table>
+            <tr>
+                <th>dag</th>
+                <th>begintijd</th>
+                <th>eindtijd</th>
+            </tr>    
+
+            <tr>
+             <td>Zaterdag</td>
+             <td>13:30</td> 
+             <td>19:30</td>
+            </tr>
+
+        </table>
         <table>
             <tr>
                 <th>Ticket</th>
@@ -96,11 +87,11 @@
                 <th>aantal beschikbaar</th>
             </tr>    
             @foreach($tickets as $ticket)
-            @if($ticket->id <= 5)
+            @if($ticket->id == 6)
             <tr>
              <td>{{$ticket->ticket_naam }}</td>
              <td>{{$ticket->prijs }}</td>
-            @if($ticket->id <= 3)
+            @if($ticket->id == 6)
              <td>{{$ticket->aantal_beschikbaar }}</td>
             </tr>
             @endif
@@ -112,7 +103,7 @@
     <div class="input-group">
         @include('includes.info-box')
         
-        <form  method="post" action='{{ route('postreservering') }}' id='reserveren'>
+        <form  method="post" action='{{ route('postbijeenkomst') }}' id='reserveren'>
             
             <!-- ******* Ticket ******* -->
             <div class="col-md-6">
@@ -133,12 +124,17 @@
                             <td>
                                 <select name="ticket[]" class="ticket">
                                     @foreach($tickets as $ticket)
+                                    @if($ticket->id == 6)
                                         <option ticket-prijs="{{ $ticket->prijs }}" value="{{ $ticket->id }}">{{ $ticket->ticket_naam }}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                             </td>
                             <td>
-                                <input type="text" name="price[]" class="price" value="45" readonly>
+                                <input type="text" name="price[]" class="price" value="25" readonly>
+                            </td>
+                            <td>
+                                <input type="text" name="onecount[]" class="onecount" value="1" readonly>
                             </td>
                         </tr>
                         <button type="button" class="btn addticket" value="+">Ticket Toevoegen</button><br>
@@ -146,39 +142,25 @@
                 </table>
             </div>
                  <!-- ******* Maaltijd ******* -->
-            <div class="col-md-6">
-                <button type="button" class="btn addmaaltijd" value="+">Maaltijd toevoegen +</button><br>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nr.</th>
-                            <th>Soort maaltijd</th>
-                            <th>Prijs</th>
-                        </tr>
-                    </thead>
-                    <tbody class="body_maaltijd">
-                        <label for="maaltijd">
-                            Kies een maaltijd: 
-                        </label><br>
-                            </tbody>
-                </table>
-            </div>
+        
             
             <div class ="totaaldiv col-md-12">
                 <center>
                     <table>
                         <tr>
                            <td><label for="totaal">Totaal ticket: </label></td>
-                            <td><input type="text" id="totaalTicket" name="totaalTicket" class="totaalTicket" value="45" readonly></td>
+                            <td><input type="text" id="totaalTicket" name="totaalTicket" class="totaalTicket" value="25" readonly></td>
                         </tr>
-                        <tr>
-                           <td><label for="totaal">Totaal maaltijd: </label></td>
-                            <td><input type="text" id="totaalMaaltijd" name="totaalMaaltijd" class="totaalMaaltijd" value="0" readonly></td>
+                        
+                         <tr>
+                           <td><label for="counter">counter: </label></td>
+                            <td><input type="text" id="counter" name="counter" class="counter" value="1" readonly></td>
                         </tr>
-                        <tr>
+                    
+                       <!-- <tr>
                             <td><label for="totaal">Totaal prijs: </label></td>
-                            <td><input type="text" id="totaalReservering" name="totaalReservering" class="totaalReservering" value="45" readonly></td>
-                        </tr>
+                            <td><input type="text" id="totaalReservering" name="totaalReservering" class="totaalReservering" value="25" readonly></td>
+                        </tr>-->
                     </table>
                 </center>
             </div>

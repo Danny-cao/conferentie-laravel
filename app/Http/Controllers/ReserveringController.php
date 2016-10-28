@@ -28,6 +28,100 @@ class ReserveringController extends Controller
        /* return view('layouts.reserveren.reservering')->with(['tickets'=>$query, 'maaltijds'=>$queryMaaltijd]);     */
     }
     
+    public function getBijeenkomst()
+    {
+        $query = DB::table('ticket_types')->get();
+        $queryMaaltijd = DB::table('maaltijd_types')->get();
+        return view('layouts.reserveren.bijeenkomst')->with(['tickets'=>$query, 'maaltijden'=>$queryMaaltijd]);
+    }
+    
+    public function postBijeenkomst(Request $request)
+    {
+        
+        $post = $request->all();
+        
+         $usertest = array(
+            
+                        'id' => DB::table('users')->max('id') + 1,
+                        'naam' => $post['naam'],
+                        'tussenvoegsel' => $post['tussenvoegsel'],
+                        'achternaam' => $post['achternaam'],
+                        'email' => $post['email'],
+                        'telnummer' => $post['telnummer'],
+                        'adres' => $post['adres'],
+                        'woonplaats' => $post['woonplaats'],
+                        'role' => 1,
+                             
+                      );
+        
+        
+        
+        $j = DB::table('users')->insertgetId($usertest);
+            
+
+        $reserveringtest = array(
+            
+                        'id' => DB::table('reserverings')->max('id') + 1,
+                        'user' => $j,
+                        'betaalmethode' => $post['betaalmethode'],
+                        'totale_prijs' => 50,
+                      );
+                      
+        $h = DB::table('reserverings')->insertgetId($reserveringtest);              
+                      
+                      
+            
+            $ticketTests = []; 
+            for($i=0;$i < count($post['ticket']); $i++)
+            {
+            	
+            	
+            DB::table('ticket_types')
+            ->where('id', $post['ticket'][$i])
+            ->decrement('aantal_beschikbaar');
+            
+            /*
+            $checkAantalbeschikbaar = DB::table('ticket_types')->get('aantal_beschikbaar');
+            
+            if($checkAantalbeschikbaar < 0 ) {
+            	
+            } */
+            
+            
+                 $ticketTests[] = Ticket::create([
+                             'ticket_type' => $post['ticket'][$i],
+                             'reservering' => $h,
+                             'ticketcode' => $j . $post['ticket'][$i] . $h,]
+                    );
+                    
+                    
+            }
+            
+            $ticketTypes = DB::table('ticket_types')->get();
+            
+            
+            $pdf = PDF::loadView('pdf.customer',[
+                'reserveringtest' => $reserveringtest,
+                'user' => $usertest,
+                'tickettest' => $ticketTests,
+                'ticketTypes' => $ticketTypes,
+                ]);
+            
+            foreach ($ticketTests as $test){
+                
+                QrCode::format('png')->size(250)->generate('ticketcode: ' .$test->ticketcode,public_path(). '/src/tickets/'.$test->id.'.jpg');
+            }
+            
+            Event::fire(new MessageTicket($reserveringtest,$usertest,$pdf));
+                    
+        
+        return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol gereserveerd voor de bijeenkomst!
+        De ticket(s) zijn verstuurd naar de opgegeven email :'. '  ' . $usertest['email']]);
+    
+    
+        
+    }
+    
     public function getReserveringCompleet()
     {
         return view('layouts.reserveren.reservering_compleet');
@@ -237,39 +331,20 @@ class ReserveringController extends Controller
             }
             
 /*testing*/
-        $maaltijdTests = [];
-		$max_meal_id = Maaltijd::max('id');
-		$last_meal_id = $max_meal_id;
-        $dateReservering = Carbon::now(config('app.timezone'))->toDateTimeString();
-
-			$meal_types = \DB::table('maaltijd_types')->get();
-
-			foreach ($meal_types as $meal_type) {
-
-				$meal_type_count = $request->get('maaltijd-' . $meal_type->id);
-
-				if (intval($meal_type_count) > 0) {
-
-					for ($i = 0; $i < $meal_type_count; $i++) {
-
-						$last_meal_id++;
-
-						$maaltijdTests[] = Maaltijd::create([
-							'id' => $last_meal_id,
-							'reservering' => $h,
-							'maaltijd_type' => $meal_type->id,
-							'maaltijdcode' =>  uniqid($h . $meal_type->id . $last_meal_id),
-							'created_at' => $dateReservering,
-						]);
-
-					}
-
-				}
-			}
-    
-        
-            
-/*testing*/            
+     /* Alle maaltijden */
+            if (isset($post["maaltijd"])) {
+                // $x is what makes sure that the vegetarisch checkbox is correct with each row
+                $maaltijdTests = [];
+                for ($i = 0; $i < count($post["maaltijd"]); $i++)
+                {
+                    
+                    $maaltijdTests[] = Maaltijd::create(['id' => DB::table('maaltijds')->max('id') + 1,
+                        'reservering' => $h,
+                        'maaltijd_type' => $post["maaltijd"][$i],
+                        'maaltijdcode' => "999" . $post["maaltijd"][$i] . $j . DB::table('maaltijds')->max('id')
+                    ]);
+                    
+                    
             $maaltijdTypes = DB::table('maaltijd_types')->get();
             $ticketTypes = DB::table('ticket_types')->get();
             
@@ -293,6 +368,36 @@ class ReserveringController extends Controller
             }
             
             Event::fire(new MessageTicket($reserveringtest,$usertest,$pdf));
+                    
+                    
+                }
+            }
+            else {
+                
+            $ticketTypes = DB::table('ticket_types')->get();
+            
+            $pdf = PDF::loadView('pdf.customer',[
+                'reserveringtest' => $reserveringtest,
+                'user' => $usertest,
+                'tickettest' => $ticketTests,
+                'ticketTypes' => $ticketTypes,
+                ]);
+            
+            foreach ($ticketTests as $test){
+                
+                QrCode::format('png')->size(250)->generate('ticketcode: ' .$test->ticketcode,public_path(). '/src/tickets/'.$test->id.'.jpg');
+            }
+            
+            
+            Event::fire(new MessageTicket($reserveringtest,$usertest,$pdf));
+                    
+                
+            }
+    
+        
+            
+/*testing*/            
+
             
             
       /*  $pathToFile = $pdf;
@@ -308,7 +413,32 @@ class ReserveringController extends Controller
            $m->attachData($pathToFile->output(),'ticket.pdf');
            
          });*/
+         
+        foreach ($ticketTests as $test){
+                
+                QrCode::format('png')->size(250)->generate('ticketcode: ' .$test->ticketcode,public_path(). '/src/tickets/'.$test->id.'.jpg');
+            }
             
+         
+         foreach($ticketTests as $testing)
+         {
+             
+         
+         
+         
+         if ($testing->ticket_type == 2){
+             
+             $user = $usertest;
+             
+         Mail::send('emails.send_uitnodiging_mail', ['user' => $user], function($m) use ($user){
+           $m->from('info@ict-open.nl',' Conferentie ICT-OPEN');
+           $m->to($user['email'],$user['naam']);
+           $m->subject('Uitnodiging');
+       });
+         }
+         break;
+    
+         }
             return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol Gereserveerd!']);
     
     }

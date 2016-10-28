@@ -12,7 +12,7 @@
           @endforeach    
           @endforeach
           
-          
+@if(isset($maaltijdtest) )       
           @foreach($maaltijdtest as $maaltijd)
           @foreach($maaltijdTypes as $maaltijdType)
         <ul>
@@ -25,3 +25,4 @@
         </ul>     
           @endforeach    
           @endforeach
+@endif

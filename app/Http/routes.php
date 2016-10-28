@@ -53,6 +53,18 @@ Route::group(['prefix' => 'reservering'], function() {
         'uses' => 'ReserveringController@getReserveringCompleet',
         'as' => 'reservering.compleet'
         ]);    
+    
+    //extra opdracht    
+    Route::get('/bijeenkomst', [
+        'uses' => 'ReserveringController@getBijeenkomst',
+        'as' => 'bijeenkomst'
+        ]);    
+        
+    Route::post('/postBijeenkomst', [
+        'uses' => 'ReserveringController@postBijeenkomst',
+        'as' => 'postbijeenkomst'
+        
+        ]);    
         
 });    
         // PDF test route 
