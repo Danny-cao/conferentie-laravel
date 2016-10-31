@@ -293,4 +293,20 @@ thead{
     pointer-events: none;
 }
 
+.search-table-table {
+    text-align: center;
+    
+}
+
+.search-table .search-table-table tbody tr th {
+    
+    background-color:grey;
+    
+}
+
+.search-table .search-table-table tbody tr td {
+    
+    border: 1px solid lightgray;
+    
+}
 

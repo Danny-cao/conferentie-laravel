@@ -9,6 +9,7 @@ class Maaltijd extends Model
      protected $fillable = [
         'maaltijd_type',
         'reservering',
+        'dag',
         'maaltijdcode',
         ];
 }

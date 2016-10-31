@@ -95,13 +95,6 @@ class ReserveringController extends Controller
             ->where('id', $post['ticket'][$i])
             ->decrement('aantal_beschikbaar');
             
-            /*
-            $checkAantalbeschikbaar = DB::table('ticket_types')->get('aantal_beschikbaar');
-            
-            if($checkAantalbeschikbaar < 0 ) {
-            	
-            } */
-            
             
                  $ticketTests[] = Ticket::create([
                              'ticket_type' => $post['ticket'][$i],
@@ -351,10 +344,8 @@ class ReserveringController extends Controller
                     
             }
             
-/*testing*/
-     /* Alle maaltijden */
+            // if maaltijd besteld
             if (isset($post["maaltijd"])) {
-                // $x is what makes sure that the vegetarisch checkbox is correct with each row
                 $maaltijdTests = [];
                 for ($i = 0; $i < count($post["maaltijd"]); $i++)
                 {
@@ -362,6 +353,7 @@ class ReserveringController extends Controller
                     $maaltijdTests[] = Maaltijd::create(['id' => DB::table('maaltijds')->max('id') + 1,
                         'reservering' => $h,
                         'maaltijd_type' => $post["maaltijd"][$i],
+                        'dag' => $post['dag'][$i],
                         'maaltijdcode' => "999" . $post["maaltijd"][$i] . $j . DB::table('maaltijds')->max('id')
                     ]);
                     
@@ -412,35 +404,9 @@ class ReserveringController extends Controller
             
             Event::fire(new MessageTicket($reserveringtest,$usertest,$pdf));
                     
-                
             }
     
-        
-            
-/*testing*/            
-
-            
-            
-      /*  $pathToFile = $pdf;
-        $user = $usertest;
-        $reservering_ticket = $ticketTests;
-        
-               return $pathToFile->stream();
-               
-         Mail::send('emails.send_ticket_mail', ['reservering_ticket' => $reservering_ticket, 'user' => $user ,'pathToFile' => $pathToFile], function($m) use ($reservering_ticket, $pathToFile, $user){
-           $m->from('info@ict-open.nl',' Conferentie ICT-OPEN');
-           $m->to($user['email'],$user['naam']);
-           $m->subject('ticket Reservering');
-           $m->attachData($pathToFile->output(),'ticket.pdf');
-           
-         });*/
-         
-        foreach ($ticketTests as $test){
-                
-                QrCode::format('png')->size(250)->generate('ticketcode: ' .$test->ticketcode,public_path(). '/src/tickets/'.$test->id.'.jpg');
-            }
-            
-         
+        //extra opdracht
          foreach($ticketTests as $testing)
          {
              
@@ -457,22 +423,26 @@ class ReserveringController extends Controller
                  $magkopen++;
             }
             
-         
         
+            // max reservering
+            // 
+            // count ticket type where 2 
+        //$tester1 = DB::table('tickets')->where('ticket_type', '2')->count();
+        
+        $tester1 = DB::table('tickets')->where([['reservering', '=' , $h] , ['ticket_type', '=' ,'2']])->count();
         
         
         $bijeenkomstarray = array(
                         'reserveringscode' => DB::table('bijeenkomsts')->max('id') + 1 . $h . $j ,
-                        'aantal' => $magkopen,
+                        'aantal' => $tester1,
             );     
             
-            
-        $insertBijeenkomst = DB::table('bijeenkomsts')->insertgetId($bijeenkomstarray);       
+        $insertBijeenkomst = DB::table('bijeenkomsts')->insert($bijeenkomstarray);       
         
             
              
              
-         Mail::send('emails.send_uitnodiging_mail', ['user' => $user, 'magkopen' => $magkopen, 'bijeenkomsts' => $bijeenkomstarray['reserveringscode'] ], function($m) use ($user){
+         Mail::send('emails.send_uitnodiging_mail', ['user' => $user, 'magkopen' => $tester1, 'bijeenkomsts' => $bijeenkomstarray['reserveringscode'] ], function($m) use ($user){
            $m->from('info@ict-open.nl',' Conferentie ICT-OPEN');
            $m->to($user['email'],$user['naam']);
            $m->subject('Uitnodiging');

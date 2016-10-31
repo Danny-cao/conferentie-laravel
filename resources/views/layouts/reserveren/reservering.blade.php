@@ -55,9 +55,16 @@
             var maaltijd = $('.maaltijd').html();
             var n = ($('.body_maaltijd tr').length-0)+1;
             var newTicketRow = '<tr><th class="no">'+ n +'</th>' +
-        		'<td><select name="maaltijd[]" class="maaltijd">@foreach($maaltijden as $maaltijd)' + 
+            
+        		'<td><select name="maaltijd[]" class="maaltijd" id="maaltijd">@foreach($maaltijden as $maaltijd)' + 
         		'<option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->maaltijd_naam }}</option>@endforeach</select></td>' + 
+
+        			
+            	'<td><select name="dag[]" class="dag" id="dag">' + 
+        		'<option value="vrijdag">Vrijdag</option>' + '<option value="zaterdag">Zaterdag</option>' + '<option value="zondag">Zondag</option>' + '</select></td>' +
+        		
             	'<td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>' + 
+            
         		'<td><a href="#" class="btn btn-danger delete">verwijder</a></td></tr>';
             $('.body_maaltijd').append(newTicketRow);
             
@@ -81,6 +88,30 @@
             veranderPrijs();
         });
         
+        
+        
+        //$("#dag option[value='vrijdag']").remove();
+        
+        
+       /* $('.maaltijd').chosen().change( function() {
+        var selectedValue = $(this).find('option:selected').val();
+        $(this).parent().parent().find('option[value="'+ selectedValue +'"]:not(:selected)').attr('disabled','disabled');
+        $('.maaltijd').trigger("liszt:updated");
+        });*/
+        
+/*        
+        
+
+
+        
+        $('#maaltijd option').each(function() {
+    if (this.selected == true) {
+       alert($(this).val() + " is selected");
+    } else {
+       alert($(this).val() + ' is not');
+    }
+});*/
+
         
     });
     
@@ -115,7 +146,7 @@
         <form  method="post" action='{{ route('postreservering') }}' id='reserveren'>
             
             <!-- ******* Ticket ******* -->
-            <div class="col-md-6">
+            <div class="input-group">
                 <table>
                     <thead>
                         <tr>
@@ -146,13 +177,14 @@
                 </table>
             </div>
                  <!-- ******* Maaltijd ******* -->
-            <div class="col-md-6">
-                <button type="button" class="btn addmaaltijd" value="+">Maaltijd toevoegen +</button><br>
+            <div class="input-group">
+                <button type="button" class="btn addmaaltijd" value="+">Maaltijd toevoegen</button><br>
                 <table>
                     <thead>
                         <tr>
                             <th>Nr.</th>
                             <th>Soort maaltijd</th>
+                            <th>Dag</th>
                             <th>Prijs</th>
                         </tr>
                     </thead>
@@ -164,7 +196,7 @@
                 </table>
             </div>
             
-            <div class ="totaaldiv col-md-12">
+            <div class="input-group">
                 <center>
                     <table>
                         <tr>
@@ -184,36 +216,51 @@
             </div>
             
             
-            <div class ="input-group">
-                <table>
+            <h3>Persoonlijke gegevens: </h3>
+            <div class="input-group">
+                
                     <tr>
                         <td><label for="naam">Voornaam: </label></td>
                         <td><input type="text" name="naam" id="naam" placeholder="naam"/></td>
                     </tr>
+            </div>
+            
+            <div class="input-group">
                     <tr>
                         <td><label for="tussenvoegsel">Tussenvoegsel: </label></td>
                         <td><input type="text" name="tussenvoegsel" id="tussenvoegsel" placeholder="tussenvoegsel"/></td>
                     </tr>
+            </div>        
                     <tr>
                         <td><label for="achternaam">Achternaam: </label></td>
                         <td><input type="text" name="achternaam" id="achternaam" placeholder="achternaam"/></td>
                     </tr>
+            </div>        
+            <div class="input-group">           
                     <tr>
                         <td><label for="email">Email: </label></td>
                         <td><input type="text" name="email" id="email" placeholder="Danny@danny.nl"/></td>
                     </tr>
+            </div>        
+            <div class="input-group">           
                     <tr>
                         <td><label for="telnummer">Telnummer: </label></td>
                         <td><input type="text" name="telnummer" id="telnummer" placeholder="telnummer"/></td>
                     </tr>
+            </div>        
+            <div class="input-group">           
                     <tr>
                         <td><label for="adres">Adres: </label></td>
                         <td><input type="text" name="adres" id="adres" placeholder="adres"/></td>
                     </tr>
+            </div>        
+            <div class="input-group">           
                     <tr>
                         <td><label for="woonplaats">Woonplaats: </label></td>
                         <td><input type="text" name="woonplaats" id="woonplaats" placeholder="woonplaats"/></td>
                     </tr>
+            </div>        
+            <div class="input-group">          
                     <tr>
                         <td><label for="betaalmethode">Betaalmethode: </label></td>
                         <td>
@@ -222,15 +269,18 @@
                             </select>
                         </td>
                     </tr>
+            </div>           
+            <div class="input-group">       
                     <tr>
                         <td><button type="submit" class="btn">Bevestigen</button></td>
                         <td></td>
                     </tr>
+            </div>        
+            <div class="input-group">        
                     <tr>
                         <td><input type="hidden" name="_token" value="{{ Session::token() }}"/></td>
                         <td></td>
                     </tr>
-                </table>
             </div>
         </form>
     </div>

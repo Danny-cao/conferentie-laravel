@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Slot;
 use App\Wensen;
+use App\Aanmelding_wens;
 
 use App\Http\Requests;
 
@@ -44,12 +45,24 @@ class AanmeldingController extends Controller
         $user->save();
         
         $aanmelding = new Aanmelding();
+        $aanmelding->id = DB::table('aanmeldings')->max('id') +1;
         $aanmelding->user = $user->id; 
         $aanmelding->slot = $request['slot'];
         $aanmelding->onderwerp = $request['onderwerp'];
         $aanmelding->omschrijving = $request['omschrijving'];
         $aanmelding->voorkeur = $request['voorkeur'];
         $aanmelding->save();
+        
+        $wens = []; 
+            for($i=0;$i < count($request['wens']); $i++)
+            {
+            
+               $wens[] = Aanmelding_wens::create([
+				    'aanmelding' => $aanmelding->id,
+				    'wens' => $request['wens'][$i],
+				    	]);
+            }		
+					
         
         
         //TODO Wensen table

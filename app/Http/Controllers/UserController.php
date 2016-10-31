@@ -38,26 +38,61 @@ class UserController extends Controller
         $aanmeldingen = DB::table('aanmeldings')->get();
         $slots = DB::table('slots')->get();
         $users = DB::table('users')->get();
-        return view('organisator.aanvraag')->with(['aanmeldingen' => $aanmeldingen, 'slots'=> $slots, 'users' => $users]);
+        $tags = DB::table('tags')->get();
+        $aanmelding_wensen = DB::table('aanmelding_wens')->get();
+        $wensen = DB::table('wensens')->get();
+
+        return view('organisator.aanvraag')->with(['aanmeldingen' => $aanmeldingen, 'slots'=> $slots, 'users' => $users, 'tags' => $tags, 'aanmelding_wensen' => $aanmelding_wensen, 'wensen' => $wensen]);
         
     }
     
     public function postAanvraag(Request $request)
     {
+        
+          if ( $request['verwerpen'] == 1) {
+              
+            $email = $request['email'];
+            $gebruiker = $request['naam'];
+            $gekozen_slot = $request['slotAanvraag'];
+            $slots = DB::table('slots')->get();
+            $aanmeldingen = DB::table('aanmeldings')->get();
+               
+         Mail::send('emails.send_result_aanvraag_mail', ['gekozen_slot' => $gekozen_slot, 'slots' => $slots , 'aanmeldingen' => $aanmeldingen,'email' => $email, 'gebruiker' => $gebruiker ], function($m) use ($email, $gebruiker){
+           $m->from('info@ict-open.nl',' Conferentie ICT-OPEN');
+           $m->to($email,$gebruiker);
+           $m->subject('Beoordeling Aanvraag Aanmelding cancel');
+           
+         });  
+              
+              
+            DB::table('slots')
+            ->where('id', $request['slotAanvraag'])
+            ->update(['status' => 1]);
+            
+            DB::table('aanmeldings')->where('slot', '=', $request['slotAanvraag'])->delete();
+            
+               
+            return redirect()->route('user.aanvraag')->with(['success' => 'aanvraag verworpen']);
+            
+          }
+          
+          else { 
             DB::table('slots')
             ->where('id', $request['slotAanvraag'])
             ->update(['status' => 3]);
             
+			$tag = []; 
+            for($i=0;$i < count($request['tags']); $i++)
+            {
             
-            
-            
-         /*   $tag = Slot_tag::create([
-					    'slot' => $request['slotAanvraag'],
-					    'email' => $request->get('email'),
-						'naam' => $request->get('naam'),
-					]);*/
-            
-            
+               $tag[] = Slot_tag::create([
+				    'slot' => $request['slotAanvraag'],
+				    'tag' => $request['tags'][$i],
+				    	]);
+            }		
+					
+					
+					
             
             $email = $request['email'];
             $gebruiker = $request['naam'];
@@ -73,6 +108,7 @@ class UserController extends Controller
          });
         
         return redirect()->route('user.aanvraag')->with(['success' => 'aanvraag geaccepteerd']);
+          }
     }
     
     public function getConferentie()

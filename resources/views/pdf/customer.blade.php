@@ -19,6 +19,7 @@
          @if($maaltijd->maaltijd_type == $maaltijdType->id)
              <li>Maaltijd:</li>
              <li>{{ $maaltijdType->maaltijd_naam }}</li>
+             <li>{{ $maaltijd->dag }}
           
              <li><img src="http://conferentie-dannycao.c9users.io/src/maaltijden/{{ $maaltijd->id }}.jpg"></li>
         @endif              

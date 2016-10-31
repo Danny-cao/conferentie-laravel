@@ -4,34 +4,6 @@
  <section class="Aanvraag"> 
 <h1> Organisator Aanvragen</h1>
 
-
-   
-   
-   <!-- <table class ="aanvragen">
-    <form type="post">
-         <tr>
-            <th></th><th>onderwerp</th><th>omschrijving</th>
-        </tr>
-        @foreach($aanmeldingen as $aanmelding)
-        @foreach($slots as $slot)
-        @if( $aanmelding->slot == $slot->id)
-        <tr>
-            <td><input type="radio" name="slot" value="{{ $aanmelding->id }}"></td>
-            <td>{{ $aanmelding->onderwerp }}</td>
-            <td>{{ $aanmelding->omschrijving }}</td>
-        </tr>
-        @endif
-        @endforeach
-        @endforeach
-        <td><input type="button" name="accepteren" value="accepteren"/></td> 
-        <td><input type="button" name="verwerpen" value="verwerpen"/></td> 
-    </form>
-    </table>    
-    
-    -->
-    
-   
-
         <br><br>
          <br><br>
          @foreach($users as $user)
@@ -85,32 +57,91 @@
             
             
             <div class ="input-group">
+                <label for="wensen">
+                    wensen:
+                </label>
+                <tr>
+                    @foreach($aanmelding_wensen as $aanmelding_wens)
+                    @foreach($wensen as $wens)
+                    @if($aanmelding->id == $aanmelding_wens->aanmelding && $aanmelding_wens->wens == $wens->id)
+                    <td><input type="text" name="wensen" value="{{ $wens->wens }}" readonly></td> 
+                    @endif
+                    @endforeach
+                    @endforeach
+                </tr>
+            </div>
+            
+            <div class ="input-group">
                 <label for="slot">
-                    Voorkeur:
+                    slot:
                 </label>
                 <tr>
                     <td><input type="number" name="slotAanvraag" id="slotAanvraag" value="{{ $slot->id }}"  readonly></td> 
                     <td>{{$slot->begintijd}} - {{ $slot->eindtijd }} - {{ $slot->zaal }} - {{ $slot->dag }}</td>
                 </tr>
 
-            
             </div>
             
             
             <div class ="input-group">
                 <label for="voorkeur">
-                    Slot:
+                    voorkeur:
                 </label>
                 <tr>
                     <td><input type="number" name="slot" value="{{ $aanmelding->voorkeur }}"></td> 
                     <td>{{$slot->begintijd}} - {{ $slot->eindtijd }} - {{ $slot->zaal }} - {{ $slot->dag }}</td>
                 </tr>
+            </div>
+            
+             <div class ="input-group">
+                <label for="slot">
+                    Verwerpen:
+                </label>
+                <tr>
+                    <select name="verwerpen">
+                    <option value="accept"> - </option>
+                    <option value="1">{{$slot->begintijd}} - {{ $slot->eindtijd }} - {{ $slot->zaal }} - {{ $slot->dag }}</option>
+                      
+                    </select>
+                </tr>
 
             
             </div>
             
-            <button type="submit" class="btn">accepteren</button>
+            <div class ="input-group">
+                <label for="slot">
+                    Tags toevoegen:
+                </label>
+                <tr>
+                    <select name="tags[]">
+                        <option value="geen">tag 1</option>
+                        @foreach($tags as $tag)
+                        <option value="{{ $tag->id }}">{{ $tag->tag_naam}}</option>
+                        @endforeach
+                    </select>
+                    
+                       <select name="tags[]">
+                        <option value="geen">tag 2</option>   
+                        @foreach($tags as $tag)
+                        <option value="{{ $tag->id }}">{{ $tag->tag_naam}}</option>
+                        @endforeach
+                    </select>
+                    
+                    <select name="tags[]">
+                        <option value="geen">tag 3</option>
+                        @foreach($tags as $tag)
+                        <option value="{{ $tag->id }}">{{ $tag->tag_naam}}</option>
+                        @endforeach
+                    </select>
+                </tr>
+
+            
+            </div>
+            
+            <button type="submit" class="btn">bevestigen</button>
             <input type="hidden" name="_token" value="{{ Session::token() }}"/>
+            <br>
+            <hr style="height:3px;border:none;color:#333;background-color:#333;" />
         </form>
         @endif
         @endforeach
