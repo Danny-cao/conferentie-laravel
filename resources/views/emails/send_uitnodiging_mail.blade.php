@@ -269,7 +269,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="http://conferentie-dannycao.c9users.io/reservering/bijeenkomst" target="_blank">Click Me</a> </td>
+                                      <td> <a href="http://conferentie-dannycao.c9users.io/reservering/bijeenkomst/?code={{ $bijeenkomsts }}" target="_blank">Click Me</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>

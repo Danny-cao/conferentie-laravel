@@ -47,6 +47,7 @@
             var prijs = newTicketRow.find(".ticket option:selected").attr("ticket-prijs");
             newTicketRow.find(".price").val(prijs);
             veranderPrijs();
+            
         });
         
              /* ************************ Maaltijd ************************ */
@@ -57,11 +58,21 @@
             var newTicketRow = '<tr><th class="no">'+ n +'</th>' +
             
         		'<td><select name="maaltijd[]" class="maaltijd" id="maaltijd">@foreach($maaltijden as $maaltijd)' + 
+        		
         		'<option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->maaltijd_naam }}</option>@endforeach</select></td>' + 
 
-        			
-            	'<td><select name="dag[]" class="dag" id="dag">' + 
-        		'<option value="vrijdag">Vrijdag</option>' + '<option value="zaterdag">Zaterdag</option>' + '<option value="zondag">Zondag</option>' + '</select></td>' +
+                '<td>' +
+        
+                     '<select name="dag[]">' + 
+                                '<option value="vrijdag">Vrijdag</option>' +
+                                '<option value="zaterdag">Zaterdag</option>' +
+                                '<option value="zondag">Zondag</option>' +
+                            '</select>' +
+                
+                
+                '</td>' +
+                
+                    
         		
             	'<td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>' + 
             
@@ -79,38 +90,29 @@
         });
         
         /* Change value depending on type Maaltijd */
-        $('.body_maaltijd').delegate(".maaltijd", "change", function() {
+        $('.body_maaltijd').delegate(".maaltijd", "change", function(e) {
             var newTicketRow = $(this).parent().parent();
             var prijs = newTicketRow.find(".maaltijd option:selected").attr("maaltijd-prijs");
             
             newTicketRow.find(".priceMaaltijd").val(prijs);
+             
+            var el = e.target;
+        
+            var new_el = $('#dag_template').clone();
+            new_el.attr('id', '');
+            new_el.css('display', 'block');
+
+            if(el.value == '2'){
+                new_el.find('option[value=vrijdag]').remove();
+            }
+            
+            $(el.parentElement).next().html(new_el);
             
             veranderPrijs();
         });
         
         
-        
-        //$("#dag option[value='vrijdag']").remove();
-        
-        
-       /* $('.maaltijd').chosen().change( function() {
-        var selectedValue = $(this).find('option:selected').val();
-        $(this).parent().parent().find('option[value="'+ selectedValue +'"]:not(:selected)').attr('disabled','disabled');
-        $('.maaltijd').trigger("liszt:updated");
-        });*/
-        
-/*        
-        
 
-
-        
-        $('#maaltijd option').each(function() {
-    if (this.selected == true) {
-       alert($(this).val() + " is selected");
-    } else {
-       alert($(this).val() + ' is not');
-    }
-});*/
 
         
     });
@@ -191,6 +193,13 @@
                     <tbody class="body_maaltijd">
                         <label for="maaltijd">
                             Kies een maaltijd: 
+                            
+                            <select name="dag[]" id="dag_template" style="display:none">
+                                <option value="vrijdag">Vrijdag</option>
+                                <option value="zaterdag">Zaterdag</option>
+                                <option value="zondag">Zondag</option>
+                            </select>
+                            
                         </label><br>
                             </tbody>
                 </table>

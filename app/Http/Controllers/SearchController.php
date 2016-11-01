@@ -18,16 +18,31 @@ class SearchController extends Controller
     public function getSearch(Request $request){
         
         
-        $tags = DB::table('tags')->get();
-        $slot_tags = DB::table('slot_tags')->get();
-        $aanmeldingen = DB::table('aanmeldings')->get();
         
-        $slots = DB::table('slots')->get();
-        $users = DB::table('users')->get();
+        $searchTag = $request->get('search');
+       
+        $slots_search = DB::table('tags')->where('tag_naam' ,'=',  $searchTag)
+        ->join('slot_tags', 'slot_tags.tag','=', 'tags.id')
+        ->join('slots','slots.id', '=','slot_tags.slot')
+        ->join('aanmeldings','aanmeldings.slot','=','slots.id')
+        ->join('users', 'users.id', '=' ,'aanmeldings.user')
+        ->whereNotNull('user')->get([
+            'naam',
+            'tussenvoegsel',
+            'achternaam',
+            'onderwerp',
+            'omschrijving',
+            'zaal',
+            'begintijd',
+            'eindtijd',
+            'zaal',
+            'dag',
+            ]);
         
+       // $slots = DB::table('slots')->where('id' , '= ', 'slot_tags');
+
         
-        $searchTag = $request['search'];
-         
-        return view('layouts.search')->with(['searchTag' => $searchTag, 'tags' => $tags, 'slot_tags' => $slot_tags , 'aanmeldingen' => $aanmeldingen, 'slots' => $slots, 'users' => $users]); 
+        return view('layouts.search')->with(['slots_search' => $slots_search, 'searchTag'=>$searchTag]); 
+       // return view('layouts.search')->with(['searchTag' => $searchTag, 'tags' => $tags, 'slot_tags' => $slot_tags , 'aanmeldingen' => $aanmeldingen, 'slots' => $slots, 'users' => $users]); 
     }
 }

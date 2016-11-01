@@ -113,8 +113,9 @@ class UserController extends Controller
     
     public function getConferentie()
     {
-        $conferenties = DB::table('slots')->get();
-        return view('organisator.conferentie')->with(['conferenties' => $conferenties]);
+        $slots = DB::table('slots')->get();
+        $statuses = DB::table('statuses')->get();
+        return view('organisator.conferentie')->with(['slots' => $slots, 'statuses' => $statuses]);
     }
     
     public function getSprekers()

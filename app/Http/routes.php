@@ -182,7 +182,7 @@ Route::group(['prefix' => 'organisator'], function(){
         'as' => 'contact.send'
         ]);    
 
-    Route::post('/search', [
+    Route::get('/search', [
         'uses' => 'SearchController@getSearch',
         'as' => 'search'
         ]);

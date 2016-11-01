@@ -380,10 +380,11 @@ class ReserveringController extends Controller
                 QrCode::format('png')->size(250)->generate('maaltijdcode: ' .$maaltijd->maaltijdcode,public_path(). '/src/maaltijden/'.$maaltijd->id.'.jpg');
             }
             
-            Event::fire(new MessageTicket($reserveringtest,$usertest,$pdf));
+            
                     
                     
                 }
+            Event::fire(new MessageTicket($reserveringtest,$usertest,$pdf));    
             }
             else {
                 

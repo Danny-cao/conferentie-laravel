@@ -95,12 +95,12 @@
             
              <div class ="input-group">
                 <label for="slot">
-                    Verwerpen:
+                    Beoordeling:
                 </label>
                 <tr>
-                    <select name="verwerpen">
-                    <option value="accept"> - </option>
-                    <option value="1">{{$slot->begintijd}} - {{ $slot->eindtijd }} - {{ $slot->zaal }} - {{ $slot->dag }}</option>
+                    <select name="beoordeling">
+                    <option value="accept">Accepteren</option>
+                    <option value="1">verwerpen</option>
                       
                     </select>
                 </tr>

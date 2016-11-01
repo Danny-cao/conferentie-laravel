@@ -172,7 +172,7 @@
                 <table>
                     <tr>
                         <td><label for="naam">Reserveringscode: </label></td>
-                        <td><input type="text" name="reserveringscode" id="reserveringscode" placeholder="reserveringscode"/></td>
+                        <td><input type="text" name="reserveringscode" id="reserveringscode" value="{{ app('request')->input('code') }}" placeholder="reserveringscode"/></td>
                     </tr>
                     <tr>
                         <td><label for="naam">Voornaam: </label></td>
