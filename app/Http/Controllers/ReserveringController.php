@@ -299,8 +299,8 @@ class ReserveringController extends Controller
                         'telnummer' => $post['telnummer'],
                         'adres' => $post['adres'],
                         'woonplaats' => $post['woonplaats'],
-                        'gebruikersnaam' => 0,
-                        'wachtwoord' => 0,
+                        'gebruikersnaam' => 'test',
+                        'password' => bcrypt('test'),
                         'role' => 1,
                              
                       );
