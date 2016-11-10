@@ -18,6 +18,9 @@ class SearchController extends Controller
     public function getSearch(Request $request){
         
         
+        $allTags = DB::table('tags')->get();
+        
+        
         
         $searchTag = $request->get('search');
        
@@ -38,11 +41,12 @@ class SearchController extends Controller
             'zaal',
             'dag',
             ]);
+
         
        // $slots = DB::table('slots')->where('id' , '= ', 'slot_tags');
 
         
-        return view('layouts.search')->with(['slots_search' => $slots_search, 'searchTag'=>$searchTag]); 
+        return view('layouts.search')->with(['slots_search' => $slots_search, 'searchTag'=>$searchTag, 'allTags' => $allTags]); 
        // return view('layouts.search')->with(['searchTag' => $searchTag, 'tags' => $tags, 'slot_tags' => $slot_tags , 'aanmeldingen' => $aanmeldingen, 'slots' => $slots, 'users' => $users]); 
     }
 }

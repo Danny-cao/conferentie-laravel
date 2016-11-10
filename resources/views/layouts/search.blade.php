@@ -9,6 +9,9 @@
 <p>U heeft gezocht op: <b>{{ $searchTag }}</b></p>
 <br>
 <p>Niks kunnen vinden? Hieronder ziet u alle beschikbare Tags:</p> 
+@foreach($allTags as $tags)
+<td>{{ $tags->tag_naam }},</td>
+@endforeach
 <br>
 
 <br>

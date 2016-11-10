@@ -12,32 +12,98 @@ class TagTableSeeder extends Seeder
      */
     public function run()
     {
+
+
         $tag = new Tag();
-        $tag->tag_naam = 'Javascript';
+        $tag->tag_naam = 'C';
         $tag->save();
         
         $tag = new Tag();
-        $tag->tag_naam = 'PHP';
+        $tag->tag_naam = 'C++';
         $tag->save();
         
         $tag = new Tag();
-        $tag->tag_naam = 'Angular';
+        $tag->tag_naam = 'GO';
         $tag->save();
         
         $tag = new Tag();
-        $tag->tag_naam = 'Jquery';
+        $tag->tag_naam = 'Java';
         $tag->save();
         
         $tag = new Tag();
-        $tag->tag_naam = 'Git';
+        $tag->tag_naam = 'Python';
         $tag->save();
         
         $tag = new Tag();
-        $tag->tag_naam = 'Linux';
+        $tag->tag_naam = 'BigTable';
         $tag->save();
         
         $tag = new Tag();
-        $tag->tag_naam = 'SQL';
+        $tag->tag_naam = 'MariaDB';
         $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'Hack';
+        $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'Erlang';
+        $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'Xhp';
+        $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'Haskell';
+        $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'Perl';
+        $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'Mysql';
+        $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'PostgreSQL';
+        $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'HBase';
+        $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'Cassandra';
+        $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'Scala';
+        $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'Ruby';
+        $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'ASP.NET';
+        $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'Django';
+        $tag->save();
+        
+        $tag = new Tag();
+        $tag->tag_naam = 'MariaDB';
+        $tag->save();
+        
+        
+        
+        
+        
+        
+        
+        
     }
 }

@@ -310,3 +310,39 @@ thead{
     
 }
 
+.vrijdag-agenda table tbody .status1 {
+    background-color: lightgreen;
+}
+
+.vrijdag-agenda table tbody .status2 {
+    background-color: lightgray;
+}
+
+.vrijdag-agenda table tbody .status3 {
+    background-color: #CD5C5C;
+}
+
+
+.zaterdag-agenda table tbody .status1 {
+    background-color: lightgreen;
+}
+
+.zaterdag-agenda table tbody .status2 {
+    background-color: lightgray;
+}
+
+.zaterdag-agenda table tbody .status3 {
+    background-color: #CD5C5C;
+}
+
+.zondag-agenda table tbody .status1 {
+    background-color: lightgreen;
+}
+
+.zondag-agenda table tbody .status2 {
+    background-color: lightgray;
+}
+
+.zondag-agenda table tbody .status3 {
+    background-color: #CD5C5C;
+}

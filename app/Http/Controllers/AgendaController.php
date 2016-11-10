@@ -12,11 +12,56 @@ class AgendaController extends Controller
       
     public function getAgenda()
     {
-        $slots = DB::table('slots')->get();
-        $statuses = DB::table('statuses')->get();
-        $aanmeldingen = DB::table('aanmeldings')->get();
-        $users = DB::table('users')->get();
         
-        return view('layouts.agenda.agenda', ['slots' =>$slots, 'aanmeldingen'=> $aanmeldingen, 'users'=> $users, 'statuses' => $statuses]);
+        $agenda_vrijdag = DB::table('slots')->where('dag' ,'=',  'vrijdag')
+        ->join('zaals', 'zaals.id','=', 'slots.zaal')
+        ->join('statuses','statuses.id', '=','slots.status')
+        ->leftJoin('aanmeldings','aanmeldings.slot','=','slots.id')->orderBy('slots.id')->get([
+            'begintijd',
+            'eindtijd',
+            'statuses.status',
+            'statuses.id',
+            'zaal',
+            'zaalnaam',
+            'onderwerp',
+            'dag',
+            ]);
+            
+            
+        $agenda_zaterdag = DB::table('slots')->where('dag' ,'=',  'zaterdag')
+        ->join('zaals', 'zaals.id','=', 'slots.zaal')
+        ->join('statuses','statuses.id', '=','slots.status')->orderBy('slots.id')
+        ->leftJoin('aanmeldings','aanmeldings.slot','=','slots.id')->get([
+            'begintijd',
+            'eindtijd',
+            'statuses.status',
+            'statuses.id',
+            'zaal',
+            'zaalnaam',
+            'onderwerp',
+            'dag',
+            ]);    
+            
+            
+        $agenda_zondag = DB::table('slots')->where('dag' ,'=',  'zondag')
+        ->join('zaals', 'zaals.id','=', 'slots.zaal')
+        ->join('statuses','statuses.id', '=','slots.status')->orderBy('slots.id')
+        ->leftJoin('aanmeldings','aanmeldings.slot','=','slots.id')->get([
+            'begintijd',
+            'eindtijd',
+            'statuses.status',
+            'statuses.id',
+            'zaal',
+            'zaalnaam',
+            'onderwerp',
+            'dag',
+            ]);
+                    
+            //var_dump($agenda_vrijdag);
+        
+
+        
+
+        return view('layouts.agenda.agenda')->with(['vrijdags' => $agenda_vrijdag, 'zaterdags' => $agenda_zaterdag, 'zondags' => $agenda_zondag]); 
     }
 }

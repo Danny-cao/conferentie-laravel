@@ -1,91 +1,75 @@
 @extends('layouts.master')
-
 @section('content')
 
-<section class ="Agenda">
-<h1>  Test agenda </h1>
 
+  <div class="container">
 
-
-<table class ="vrijdag">
-                <tr>
-                  <th>vrijdag</th>
-                </tr>
-                 <tr>
-                    <th>Begintijd</th><th>Eindtijd</th><th>Zaal</th><th>Status</th><th></th><th>Onderwerp</th>
-                </tr>
-                @foreach($slots as $slot)
-                @foreach($statuses as $status)
-                @if($slot->dag == "vrijdag" && $slot->status == $status->id )
-                <tr>
-                    <td>{{ $slot->begintijd}}</td>
-                    <td>{{ $slot->eindtijd }}</td>
-                    <td>{{ $slot->zaal}}</td>
-                    <td>{{ $status->status}}<td>
-                @foreach($aanmeldingen as $aanmelding)
-                @if($status->status == "bezet" && $slot->id == $aanmelding->slot)
-                    <td> {{ $aanmelding->onderwerp }}</td>
-                @endif    
-                @endforeach
-                @endif
-                @endforeach
-                @endforeach
-    </table>    
-    <table class ="zaterdag">
-                 <tr>
-                   <th>zaterdag</th>
-                </tr>
-                 <tr>
-                <th>Begintijd</th><th>Eindtijd</th><th>Zaal</th><th>status</th><th></th><th>Onderwerp</th>
-                </tr>
-                @foreach($slots as $slot)
-                @foreach($statuses as $status)
-                @if($slot->dag == "zaterdag" && $slot->status == $status->id)
-                <tr>
-                    <td>{{ $slot->begintijd}}</td>
-                    <td>{{ $slot->eindtijd }}</td>
-                    <td>{{ $slot->zaal}}</td>
-                    <td>{{ $status->status}}<td>
-                @foreach($aanmeldingen as $aanmelding)
-                @if($status->status == "bezet" && $slot->id == $aanmelding->slot)
-                    <td> {{ $aanmelding->onderwerp }}</td>
-                @endif    
-                @endforeach        
-                </tr>
-                @endif
-                @endforeach
-                @endforeach
-    </table>    
-     <table class ="zondag">
-                <tr>
-                   <th>Zondag</th>
-                </tr>
-                 <tr>
-                     
-                  <th>Begintijd</th><th>Eindtijd</th><th>Zaal</th><th>status</th><th></th><th></th><th>Onderwerp</th>
-                </tr>
-                @foreach($slots as $slot)
-                @foreach($statuses as $status)
-                @if($slot->dag == "zondag" && $slot->status == $status->id)
-                <tr>
-                    <td>Onderwerp</td>
-                    <td>{{ $slot->begintijd}}</td>
-                    <td>{{ $slot->eindtijd }}</td>
-                    <td>{{ $slot->zaal}}</td>
-                    <td>{{ $status->status}}<td>
-                @foreach($aanmeldingen as $aanmelding)
-                @if($status->status == "bezet" && $slot->id == $aanmelding->slot)
-                    <td> {{ $aanmelding->onderwerp }}</td>
-                @endif    
-                @endforeach                
-                </tr>
-                @endif
-                @endforeach
-                @endforeach
-    </table>    
-             
-</section>
-
-
-
+    <h2> Vrijdag </h2>
+    <div class="vrijdag-agenda">
+        <table>
+            <tr>
+                <th>Begintijd - Eindtijd</th>
+                <th>Onderwerp</th>
+                <th>Zaal</th>
+                <th>Status</th>
+                
+            </tr>
+            @foreach($vrijdags as $vrijdag)
+            <tr class="status{{ $vrijdag->id}}">
+            <td>{{ $vrijdag->begintijd }} - {{ $vrijdag->eindtijd }}</td>
+            <td> {{ $vrijdag->onderwerp }}</td>
+            <td> {{ $vrijdag->zaalnaam }}</td>
+            <td>{{ $vrijdag->status }}</td>
+              
+            </tr>
+            @endforeach
+        </table>
+    </div>
+    <br>
+    
+     <h2> Zaterdag </h2>
+    <div class="zaterdag-agenda" >
+        <table>
+            <tr>
+                <th>Begintijd - Eindtijd</th>
+                <th>Onderwerp</th>
+                <th>Zaal</th>
+                <th>Status</th>
+                
+            </tr>
+            @foreach($zaterdags as $zaterdag)
+            <tr class="status{{$zaterdag->id}}">
+            <td>{{ $zaterdag->begintijd }} - {{ $zaterdag->eindtijd }}</td>
+            <td> {{ $zaterdag->onderwerp }}</td>
+            <td> {{ $zaterdag->zaalnaam }}</td>
+            <td>{{ $zaterdag->status }}</td>
+              
+            </tr>
+            @endforeach
+        </table>
+    </div>
+    <br>
+    
+     <h2> Zondag </h2>
+    <div class="zondag-agenda">
+        <table>
+            <tr>
+                <th>Begintijd - Eindtijd</th>
+                <th>Onderwerp</th>
+                <th>Zaal</th>
+                <th>Status</th>
+                
+            </tr>
+            @foreach($zondags as $zondag)
+            <tr class="status{{$zondag->id}}">
+            <td>{{ $zondag->begintijd }} - {{ $zondag->eindtijd }}</td>
+            <td> {{ $zondag->onderwerp }}</td>
+            <td> {{ $zondag->zaalnaam }}</td>
+            <td>{{ $zondag->status }}</td>
+              
+            </tr>
+            @endforeach
+        </table>
+    </div>
+    </div>
 @endsection

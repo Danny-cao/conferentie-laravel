@@ -129,7 +129,7 @@ class ReserveringController extends Controller
     
         }
     }
-    
+    //compleet
     public function getReserveringCompleet()
     {
         return view('layouts.reserveren.reservering_compleet');
@@ -269,9 +269,14 @@ class ReserveringController extends Controller
     
     
     }
-    
+    //reserveren
     public function postReservering(Request $request)
     {
+        /*$counterVrijdag = $request>get('counter');*/
+        
+       /* $aantal_beschikbaarVrijdag = DB::table('')
+        
+        if($counterVrijdag > $ ) */
        
         $this->validate($request, [
                 'naam' => 'required',

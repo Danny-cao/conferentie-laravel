@@ -281,7 +281,7 @@
             </div>           
             <div class="input-group">       
                     <tr>
-                        <td><button type="submit" class="btn">Bevestigen</button></td>
+                        <td><button type="submit" class="btn">Betalen</button></td>
                         <td></td>
                     </tr>
             </div>        

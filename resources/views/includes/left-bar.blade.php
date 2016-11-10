@@ -4,7 +4,7 @@
             <li><a href="/">Home</a></li>
             <li><a href="{{ route('agenda') }}">Agenda</a></li>
             <li><a href="{{ route('reservering') }}">Ticket(s) reserveren</a></li>
-            <li><a href="{{ route('getTest') }}">test</a></li>
+            <!--<li><a href="{{ route('getTest') }}">test</a></li>-->
             <li><a href="/aanmelding">Aanmelden</a></li>
             <li><a href="/contact">Contact</a></li>
 
