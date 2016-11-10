@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         
         
-       $this->call(zaalTableSeeder::class);    
+       $this->call(ZaalTableSeeder::class);    
        
        $this->call(WensenTableSeeder::class);    
        
