@@ -1,4 +1,4 @@
-<div class="left-bar">
+<div class="col-sm-2 left-bar">
     
     <ul>
             <li><a href="/">Home</a></li>
