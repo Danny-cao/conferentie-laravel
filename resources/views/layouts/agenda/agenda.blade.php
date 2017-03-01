@@ -2,34 +2,6 @@
 @section('content')
 
   <div class="container">
-     
-    <div class="col-sm-12">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-3">
-             <table>
-                    <tbody>
-                        <tr>
-                            <th>Kleur</th>
-                            <th>Betekenis</th>
-                        </tr>
-                        <tr>
-                            <td>groen</td>
-                            <td>vrij</td>
-                        </tr>    
-                        <tr>
-                            <td>grijs</td>
-                            <td>onder voorbehoud</td>
-                        </tr>    
-                        <tr>
-                            <td>rood</td>
-                            <td>bezet</td>
-                        </tr>    
-                </tbody>     
-             </table>
-        </div>
-        <div class="col-sm-4"></div>
-    </div> 
-      
     <div class="col-sm-5">
         <h2> Vrijdag </h2>
         <div class="vrijdag-agenda">

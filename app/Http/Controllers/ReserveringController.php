@@ -89,20 +89,15 @@ class ReserveringController extends Controller
             $ticketTests = []; 
             for($i=0;$i < count($post['ticket']); $i++)
             {
-            	
-            	
-            DB::table('ticket_types')
-            ->where('id', $post['ticket'][$i])
-            ->decrement('aantal_beschikbaar');
+                DB::table('ticket_types')
+                ->where('id', $post['ticket'][$i])
+                ->decrement('aantal_beschikbaar');
             
-            
-                 $ticketTests[] = Ticket::create([
-                             'ticket_type' => $post['ticket'][$i],
-                             'reservering' => $h,
-                             'ticketcode' => $j . $post['ticket'][$i] . $h,]
-                    );
-                    
-                    
+                $ticketTests[] = Ticket::create([
+                    'ticket_type' => $post['ticket'][$i],
+                    'reservering' => $h,
+                    'ticketcode' => $j . $post['ticket'][$i] . $h,]
+                );
             }
             
             $ticketTypes = DB::table('ticket_types')->get();
@@ -113,7 +108,7 @@ class ReserveringController extends Controller
                 'user' => $usertest,
                 'tickettest' => $ticketTests,
                 'ticketTypes' => $ticketTypes,
-                ]);
+            ]);
             
             foreach ($ticketTests as $test){
                 
@@ -123,10 +118,8 @@ class ReserveringController extends Controller
             Event::fire(new MessageTicket($reserveringtest,$usertest,$pdf));
                     
         
-        return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol gereserveerd voor de bijeenkomst!
-        De ticket(s) zijn verstuurd naar de opgegeven email :'. '  ' . $usertest['email']]);
-    
-    
+            return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol gereserveerd voor de bijeenkomst!
+            De ticket(s) zijn verstuurd naar de opgegeven email :'. '  ' . $usertest['email']]);
         }
     }
     //compleet
@@ -134,7 +127,6 @@ class ReserveringController extends Controller
     {
         return view('layouts.reserveren.reservering_compleet');
     }
-    
     
     public function getTest() 
     {
@@ -190,8 +182,6 @@ class ReserveringController extends Controller
 						'naam' => $request->get('naam'),
 					]);
 					
-					
-
 					$reservation = Reservering::create([
 						'user' => $user->id,
 						'betaalmethode' => $request->get('payment'),
@@ -252,9 +242,10 @@ class ReserveringController extends Controller
 			// mag maximaal 10 tickets bestellen
 			if ($last_ticket_id - $max_ticket_id > env('MAX_TICKETS')) {
 				return redirect()
-					->back()->withInput()
-					->withErrors('U mag maximaal 10 tickets bestellen');
+				    ->back()->withInput()
+				    ->withErrors('U mag maximaal 10 tickets bestellen');
 			}
+			
 			if ($last_meal_id - $max_meal_id > env('MAX_MEALS')) {
 				return redirect()
 					->back()->withInput()
@@ -263,19 +254,14 @@ class ReserveringController extends Controller
 
 			Ticket::insert($tickets);
 			Maaltijd::insert($meals);
-			
-			
+        }
     }
     
-    
-    }
     //reserveren
     public function postReservering(Request $request)
     {
         /*$counterVrijdag = $request>get('counter');*/
-        
        /* $aantal_beschikbaarVrijdag = DB::table('')
-        
         if($counterVrijdag > $ ) */
        
         $this->validate($request, [
@@ -283,72 +269,50 @@ class ReserveringController extends Controller
                 'email' => 'required|email',
                 'ticket' => 'required'
                 
-            ]);
-         $post = $request->all();    
-         
-         
-     
+        ]);
         
+        $post = $request->all();    
         $usertest = array(
-            
-                        'id' => DB::table('users')->max('id') + 1,
-                        'naam' => $post['naam'],
-                        'tussenvoegsel' => $post['tussenvoegsel'],
-                        'achternaam' => $post['achternaam'],
-                        'email' => $post['email'],
-                        'telnummer' => $post['telnummer'],
-                        'adres' => $post['adres'],
-                        'woonplaats' => $post['woonplaats'],
-                        'gebruikersnaam' => 'test',
-                        'password' => bcrypt('test'),
-                        'role' => 1,
-                             
-                      );
-        
-        
+            'id' => DB::table('users')->max('id') + 1,
+            'naam' => $post['naam'],
+            'tussenvoegsel' => $post['tussenvoegsel'],
+            'achternaam' => $post['achternaam'],
+            'email' => $post['email'],
+            'telnummer' => $post['telnummer'],
+            'adres' => $post['adres'],
+            'woonplaats' => $post['woonplaats'],
+            'gebruikersnaam' => 'test',
+            'password' => bcrypt('test'),
+            'role' => 1,
+        );
         
         $j = DB::table('users')->insertgetId($usertest);
             
-
         $reserveringtest = array(
-            
-                        'id' => DB::table('reserverings')->max('id') + 1,
-                        'user' => $j,
-                        'betaalmethode' => $post['betaalmethode'],
-                        'totale_prijs' => 50,
-                      );
+            'id' => DB::table('reserverings')->max('id') + 1,
+            'user' => $j,
+            'betaalmethode' => $post['betaalmethode'],
+            'totale_prijs' => 50,
+        );
                       
         $h = DB::table('reserverings')->insertgetId($reserveringtest);              
                       
-                      
-            
             $ticketTests = []; 
             for($i=0;$i < count($post['ticket']); $i++)
             {
-            	
-            	
-            DB::table('ticket_types')
-            ->where('id', $post['ticket'][$i])
-            ->decrement('aantal_beschikbaar');
-            
+                DB::table('ticket_types')
+                ->where('id', $post['ticket'][$i])
+                ->decrement('aantal_beschikbaar');
             /*
             $checkAantalbeschikbaar = DB::table('ticket_types')->get('aantal_beschikbaar');
-            
             if($checkAantalbeschikbaar < 0 ) {
-            	
             } */
             
-            
-                 $ticketTests[] = Ticket::create([
-                             'ticket_type' => $post['ticket'][$i],
-                             'reservering' => $h,
-                             'ticketcode' => $j . $post['ticket'][$i] . $h,]
-                    );
-                    
-            
-                    
-                    
-                    
+                $ticketTests[] = Ticket::create([
+                    'ticket_type' => $post['ticket'][$i],
+                    'reservering' => $h,
+                    'ticketcode' => $j . $post['ticket'][$i] . $h,]
+                );
             }
             
             // if maaltijd besteld
@@ -356,111 +320,93 @@ class ReserveringController extends Controller
                 $maaltijdTests = [];
                 for ($i = 0; $i < count($post["maaltijd"]); $i++)
                 {
-                    
                     $maaltijdTests[] = Maaltijd::create(['id' => DB::table('maaltijds')->max('id') + 1,
                         'reservering' => $h,
                         'maaltijd_type' => $post["maaltijd"][$i],
                         'dag' => $post['dag'][$i],
                         'maaltijdcode' => "999" . $post["maaltijd"][$i] . $j . DB::table('maaltijds')->max('id')
                     ]);
-                    
-                    
-            $maaltijdTypes = DB::table('maaltijd_types')->get();
-            $ticketTypes = DB::table('ticket_types')->get();
-            
-            $pdf = PDF::loadView('pdf.customer',[
-                'reserveringtest' => $reserveringtest,
-                'user' => $usertest,
-                'tickettest' => $ticketTests,
-                'maaltijdtest' => $maaltijdTests,
-                'ticketTypes' => $ticketTypes,
-                'maaltijdTypes' => $maaltijdTypes,
-                ]);
-            
-            foreach ($ticketTests as $test){
+                    $maaltijdTypes = DB::table('maaltijd_types')->get();
+                    $ticketTypes = DB::table('ticket_types')->get();
                 
-                QrCode::format('png')->size(250)->generate('ticketcode: ' .$test->ticketcode,public_path(). '/src/tickets/'.$test->id.'.jpg');
-            }
-            
-            foreach ($maaltijdTests as $maaltijd)
-            {
-                QrCode::format('png')->size(250)->generate('maaltijdcode: ' .$maaltijd->maaltijdcode,public_path(). '/src/maaltijden/'.$maaltijd->id.'.jpg');
-            }
-            
-            
-                    
-                    
+                    $pdf = PDF::loadView('pdf.customer',[
+                        'reserveringtest' => $reserveringtest,
+                        'user' => $usertest,
+                        'tickettest' => $ticketTests,
+                        'maaltijdtest' => $maaltijdTests,
+                        'ticketTypes' => $ticketTypes,
+                        'maaltijdTypes' => $maaltijdTypes,
+                    ]);
+                
+                    foreach ($ticketTests as $test){
+                        QrCode::format('png')->size(250)
+                        ->generate('ticketcode: ' .$test->ticketcode,public_path(). '/src/tickets/'.$test->id.'.jpg');
+                    }
+                
+                    foreach ($maaltijdTests as $maaltijd)
+                    {
+                        QrCode::format('png')->size(250)
+                        ->generate('maaltijdcode: ' .$maaltijd->maaltijdcode,public_path(). '/src/maaltijden/'.$maaltijd->id.'.jpg');
+                    }
                 }
-            Event::fire(new MessageTicket($reserveringtest,$usertest,$pdf));    
+                Event::fire(new MessageTicket($reserveringtest,$usertest,$pdf));    
             }
             else {
-                
-            $ticketTypes = DB::table('ticket_types')->get();
+                $ticketTypes = DB::table('ticket_types')->get();
             
-            $pdf = PDF::loadView('pdf.customer',[
-                'reserveringtest' => $reserveringtest,
-                'user' => $usertest,
-                'tickettest' => $ticketTests,
-                'ticketTypes' => $ticketTypes,
+                $pdf = PDF::loadView('pdf.customer',[
+                    'reserveringtest' => $reserveringtest,
+                    'user' => $usertest,
+                    'tickettest' => $ticketTests,
+                    'ticketTypes' => $ticketTypes,
                 ]);
             
-            foreach ($ticketTests as $test){
-                
-                QrCode::format('png')->size(250)->generate('ticketcode: ' .$test->ticketcode,public_path(). '/src/tickets/'.$test->id.'.jpg');
+                foreach ($ticketTests as $test){
+                    QrCode::format('png')->size(250)
+                    ->generate('ticketcode: ' .$test->ticketcode,public_path(). '/src/tickets/'.$test->id.'.jpg');
+                }
+                Event::fire(new MessageTicket($reserveringtest,$usertest,$pdf));
             }
             
-            
-            Event::fire(new MessageTicket($reserveringtest,$usertest,$pdf));
-                    
-            }
-    
         //extra opdracht
-         foreach($ticketTests as $testing)
-         {
+        foreach($ticketTests as $testing)
+        {
              
-         if ($testing->ticket_type == 2){
+            if ($testing->ticket_type == 2){
+                $user = $usertest;
+                $zaterdagticketid = DB::table('ticket_types')->where('ticket_naam' , 'zaterdag')->value('id');
              
-             $user = $usertest;
-             $zaterdagticketid = DB::table('ticket_types')->where('ticket_naam' , 'zaterdag')->value('id');
-             
-             
-            $magkopen = 0;
+                $magkopen = 0;
         
-            foreach($post['ticket'] as $zaterdagticket => $zaterdagticketid )
-            {
-                 $magkopen++;
+                foreach($post['ticket'] as $zaterdagticket => $zaterdagticketid )
+                {
+                    $magkopen++;
+                }
+                
+                // max reservering
+                // 
+                // count ticket type where 2 
+                //$tester1 = DB::table('tickets')->where('ticket_type', '2')->count();
+        
+                $tester1 = DB::table('tickets')
+                ->where([['reservering', '=' , $h] , ['ticket_type', '=' ,'2']])->count();
+        
+        
+                $bijeenkomstarray = array(
+                    'reserveringscode' => DB::table('bijeenkomsts')->max('id') + 1 . $h . $j ,
+                    'aantal' => $tester1,
+                );     
+            
+                $insertBijeenkomst = DB::table('bijeenkomsts')->insert($bijeenkomstarray);       
+        
+                Mail::send('emails.send_uitnodiging_mail', ['user' => $user, 'magkopen' => $tester1, 'bijeenkomsts' => $bijeenkomstarray['reserveringscode'] ], function($m) use ($user){
+                    $m->from('info@ict-open.nl',' Conferentie ICT-OPEN');
+                    $m->to($user['email'],$user['naam']);
+                    $m->subject('Uitnodiging');
+                });
             }
-            
-        
-            // max reservering
-            // 
-            // count ticket type where 2 
-        //$tester1 = DB::table('tickets')->where('ticket_type', '2')->count();
-        
-        $tester1 = DB::table('tickets')->where([['reservering', '=' , $h] , ['ticket_type', '=' ,'2']])->count();
-        
-        
-        $bijeenkomstarray = array(
-                        'reserveringscode' => DB::table('bijeenkomsts')->max('id') + 1 . $h . $j ,
-                        'aantal' => $tester1,
-            );     
-            
-        $insertBijeenkomst = DB::table('bijeenkomsts')->insert($bijeenkomstarray);       
-        
-            
-             
-             
-         Mail::send('emails.send_uitnodiging_mail', ['user' => $user, 'magkopen' => $tester1, 'bijeenkomsts' => $bijeenkomstarray['reserveringscode'] ], function($m) use ($user){
-           $m->from('info@ict-open.nl',' Conferentie ICT-OPEN');
-           $m->to($user['email'],$user['naam']);
-           $m->subject('Uitnodiging');
-       });
-         }
-         break;
-    
-         }
-            return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol Gereserveerd!']);
-    
+            break;
+        }
+        return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol Gereserveerd!']);
     }
-    
 }

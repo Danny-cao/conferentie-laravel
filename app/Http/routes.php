@@ -170,8 +170,6 @@ Route::group(['prefix' => 'organisator'], function(){
         
     });
 
-
-        
     Route::get('/contact', [
         'uses' => 'ContactMessageController@getContactIndex',
         'as' => 'contact'

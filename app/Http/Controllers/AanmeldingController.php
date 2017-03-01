@@ -9,7 +9,6 @@ use App\User;
 use App\Slot;
 use App\Wensen;
 use App\Aanmelding_wens;
-
 use App\Http\Requests;
 
 class AanmeldingController extends Controller
@@ -20,12 +19,10 @@ class AanmeldingController extends Controller
         $querySlots = DB::table('slots')->get(); 
         $queryWens = DB::table('wensens')->get();
         
-        
         return view('layouts.aanmelden.aanmelding')->with(['Slots'=>$querySlots, 'Wensen' =>$queryWens]);    
-        
     }
     
-       public function getAanmeldingCompleet()
+    public function getAanmeldingCompleet()
     {
         return view('layouts.aanmelden.aanmelding_compleet');
     }
@@ -57,16 +54,13 @@ class AanmeldingController extends Controller
             for($i=0;$i < count($request['wens']); $i++)
             {
             
-               $wens[] = Aanmelding_wens::create([
+                $wens[] = Aanmelding_wens::create([
 				    'aanmelding' => $aanmelding->id,
 				    'wens' => $request['wens'][$i],
-				    	]);
+				]);
             }		
 					
-        
-        
         //TODO Wensen table
-        
         DB::table('slots')
             ->where('id', $request['slot'])
             ->update(['status' => 2]);

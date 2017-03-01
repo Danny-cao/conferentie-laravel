@@ -1,4 +1,4 @@
-<div class="footer">
+<div class="col-sm-12 footer">
     @if(Auth::check())
         <li><a href="/organisator/dashboard">Organisator</a></li>
     @endif
