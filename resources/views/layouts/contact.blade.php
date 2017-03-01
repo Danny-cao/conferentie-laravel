@@ -1,10 +1,6 @@
 @extends('layouts.master')
-
 @section('content')
-
-
 <section class="contact"> 
-
         <h1> Contact </h1>
         <br><br>
         <ul>
@@ -22,21 +18,18 @@
                 </label>
                 <input type="text" name="name" id="name" placeholder="je naam" value="{{ Request::old('name')}}"/>
             </div>
-            
               <div class ="input-group">
                 <label for="email">
                     Je Email
                 </label>
                 <input type="text" name="email" id="email" placeholder="Je email" value="{{ Request::old('email')}}"/>
             </div>
-            
             <div class ="input-group">
                 <label for="subject">
                     Betreft
                 </label>
                 <input type="text" name="subject" id="subject" placeholder="Subject" value="{{ Request::old('subject')}}"/>
             </div>
-            
                   <div class ="input-group">
                 <label for="message">
                     Je bericht
@@ -46,11 +39,6 @@
             <button type="submit" class="btn">Berichtje versturen</button>
             <input type="hidden" name="_token" value="{{ Session::token() }}"/>
         </form>
-        
          @include('includes.info-box')
-
-       
 </section>
-
-
 @endsection

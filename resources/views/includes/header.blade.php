@@ -1,6 +1,6 @@
 <header>
     <div class="col-sm-12 img-banner">
-        <img src="http://conferentie-dannycao.c9users.io/src/banner.jpg"
+        <img src="{{ URL::secure('src/banner.jpg') }}">
     </div>
     <nav class="col-sm-12">
         <ul>
@@ -10,10 +10,8 @@
             <form method="get" action="{{ route('search') }}" id="search">
                 <li><input type="text" name="search" placeholder="Zoek conferentie"/></li>
                 <li><button type="submit" class="btn">Search</button></li>
+                <input type="hidden" name="_token" value="{{ Session::token() }}"/>
             </form>
         </ul>
-        
-
     </nav>
-    
 </header>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-    
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="{{ URL::secure('src/css/main.css') }}" />
@@ -10,21 +9,14 @@
         <link rel="stylesheet" href="{{ URL::secure('bootstrap/css/bootstrap.css.map') }}"/>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.1/vue.min.js"> </script>
         <script src="{{ URL::secure('src/jquery/jquery-3.1.1.min.js') }}"></script>
-        
         @yield('styles')
-        
      </head>
-     
         @include('includes.header')
-        
         @include('includes.left-bar')
     <body>
-        
         <div class="col-sm-10 main">
-           
             @yield('content')
-            
-                    <!-- Scripts -->
+<!-- Scripts -->
 <!--<script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="/bower_components/moment/moment.js"></script>
@@ -33,7 +25,6 @@
 -->
 @yield('scripts')
         </div>
-        <!--@include('includes.footer')-->
-        
+        @include('includes.footer')
     </body>
 </html>

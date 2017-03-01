@@ -12,7 +12,7 @@
 <h1>ICT.OPEN</h1></br>
 </br>
 
-<img src="http://conferentie-dannycao.c9users.io/src/ict.jpg" >
+<img src="{{  URL::secure('src/ict.jpg') }}" >
 
 </br>
 <b>The Conference for IT and Programming in the Netherlands</b><br>
