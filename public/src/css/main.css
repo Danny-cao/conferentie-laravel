@@ -9,7 +9,7 @@ h1 {
 }
 
 .main {
-
+    height:auto;
 }
 
 .centered {
@@ -317,4 +317,8 @@ thead{
 
 .zondag-agenda table tbody .status3 {
     background-color: #CD5C5C;
+}
+
+.contact {
+    min-height: 720px;
 }

@@ -41,11 +41,7 @@ class ReserveringController extends Controller
         $post = $request->all();
         
         $check_aantal = DB::table('ticket_types')->where('id','6')->value('aantal_beschikbaar');
-        
-        
         $reservecode = DB::table('bijeenkomsts')->value('reserveringscode', $post['reserveringscode']);
-        
-        
         $magkopen2 = DB::table('bijeenkomsts')->where('reserveringscode', $post['reserveringscode'])->value('aantal');
         
         if($check_aantal < $post['counter'] || $post['counter'] > $magkopen2) 
@@ -56,36 +52,29 @@ class ReserveringController extends Controller
         else{
         
          $usertest = array(
-            
-                        'id' => DB::table('users')->max('id') + 1,
-                        'naam' => $post['naam'],
-                        'tussenvoegsel' => $post['tussenvoegsel'],
-                        'achternaam' => $post['achternaam'],
-                        'email' => $post['email'],
-                        'telnummer' => $post['telnummer'],
-                        'adres' => $post['adres'],
-                        'woonplaats' => $post['woonplaats'],
-                        'role' => 1,
-                             
-                      );
-        
-        
+            'id' => DB::table('users')->max('id') + 1,
+            'naam' => $post['naam'],
+            'tussenvoegsel' => $post['tussenvoegsel'],
+            'achternaam' => $post['achternaam'],
+            'email' => $post['email'],
+            'telnummer' => $post['telnummer'],
+            'adres' => $post['adres'],
+            'woonplaats' => $post['woonplaats'],
+            'role' => 1,
+        );
         
         $j = DB::table('users')->insertgetId($usertest);
             
-
         $reserveringtest = array(
             
                         'id' => DB::table('reserverings')->max('id') + 1,
                         'user' => $j,
                         'betaalmethode' => $post['betaalmethode'],
                         'totale_prijs' => 50,
-                      );
+        );
                       
         $h = DB::table('reserverings')->insertgetId($reserveringtest);              
                       
-                      
-            
             $ticketTests = []; 
             for($i=0;$i < count($post['ticket']); $i++)
             {
@@ -102,7 +91,6 @@ class ReserveringController extends Controller
             
             $ticketTypes = DB::table('ticket_types')->get();
             
-            
             $pdf = PDF::loadView('pdf.customer',[
                 'reserveringtest' => $reserveringtest,
                 'user' => $usertest,
@@ -117,7 +105,6 @@ class ReserveringController extends Controller
             
             Event::fire(new MessageTicket($reserveringtest,$usertest,$pdf));
                     
-        
             return redirect()->route('reservering.compleet')->with(['success' => 'U heeft succesvol gereserveerd voor de bijeenkomst!
             De ticket(s) zijn verstuurd naar de opgegeven email :'. '  ' . $usertest['email']]);
         }
@@ -391,12 +378,11 @@ class ReserveringController extends Controller
                 $tester1 = DB::table('tickets')
                 ->where([['reservering', '=' , $h] , ['ticket_type', '=' ,'2']])->count();
         
-        
                 $bijeenkomstarray = array(
                     'reserveringscode' => DB::table('bijeenkomsts')->max('id') + 1 . $h . $j ,
                     'aantal' => $tester1,
-                );     
-            
+                );   
+                
                 $insertBijeenkomst = DB::table('bijeenkomsts')->insert($bijeenkomstarray);       
         
                 Mail::send('emails.send_uitnodiging_mail', ['user' => $user, 'magkopen' => $tester1, 'bijeenkomsts' => $bijeenkomstarray['reserveringscode'] ], function($m) use ($user){
