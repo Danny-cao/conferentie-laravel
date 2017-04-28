@@ -29,7 +29,7 @@
              <li>Ticket:</li>
              <li>{{ $ticketType->ticket_naam}}</li>
             
-             <li><img src="http://conferentie-dannycao.c9users.io/src/tickets/{{ $test->id }}.jpg"></li>
+             <li><img src="src/tickets/{{ $test->id }}.jpg"></li>
               <hr>
          @endif     
         </ul>     
@@ -47,7 +47,7 @@
              <li>{{ $maaltijdType->maaltijd_naam }}</li>
              <li>{{ $maaltijd->dag }}
           
-             <li><img src="http://conferentie-dannycao.c9users.io/src/maaltijden/{{ $maaltijd->id }}.jpg"></li>
+             <li><img src="src/maaltijden/{{ $maaltijd->id }}.jpg"></li>
               <hr>
         @endif              
         </ul>     
